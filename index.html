@@ -1,0 +1,91 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Statistical Analysis with R for Research</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
+    <style>
+        :root {
+            scrollbar-gutter: stable;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #fcfcfd;
+            overflow-x: hidden;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .font-mono {
+            font-family: 'Fira Code', monospace;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: rgba(0,0,0,0.05);
+            border-radius: 10px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: rgba(0,0,0,0.1);
+            border-radius: 10px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: rgba(79, 70, 229, 0.4);
+        }
+
+        /* RStudio Cobalt Theme Simulation */
+        pre[class*="language-"] {
+            background: #002240 !important;
+            margin: 0 !important;
+            padding: 1rem !important;
+            border-radius: 0 !important;
+            font-family: 'Fira Code', monospace !important;
+            line-height: 1.5 !important;
+            font-size: 13px !important;
+        }
+        .token.comment { color: #0088FF !important; font-style: italic; }
+        .token.punctuation { color: #f8f8f2 !important; }
+        .token.number, .token.constant, .token.boolean { color: #FF628C !important; }
+        .token.string { color: #3AD900 !important; }
+        .token.keyword { color: #FF9D00 !important; }
+        .token.function { color: #9EFFFF !important; }
+        
+        /* Mobile-first adjustments */
+        @media (max-width: 640px) {
+            pre[class*="language-"] {
+                padding: 0.75rem !important;
+                font-size: 12px !important;
+            }
+        }
+    </style>
+<script type="importmap">
+{
+  "imports": {
+    "@google/genai": "https://esm.sh/@google/genai@^1.41.0",
+    "react-router-dom": "https://esm.sh/react-router-dom@^7.13.0",
+    "react/": "https://esm.sh/react@^19.2.4/",
+    "react": "https://esm.sh/react@^19.2.4",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
+    "prismjs": "https://esm.sh/prismjs@1.29.0",
+    "prismjs/components/prism-r": "https://esm.sh/prismjs@1.29.0/components/prism-r",
+    "prismjs/": "https://esm.sh/prismjs@^1.30.0/"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script>
+  pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+</script>
+</head>
+<body class="pb-16 md:pb-0">
+    <div id="root"></div>
+<script type="module" src="/index.tsx"></script>
+</body>
+</html>
