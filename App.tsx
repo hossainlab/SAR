@@ -1,64 +1,147 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { HashRouter, Routes, Route, Link } from 'react-router-dom';
 import Layout from './components/Layout';
 import ModuleCard from './components/ModuleCard';
-import CodeBlock from './components/CodeBlock';
 import CheatsheetCard from './components/CheatsheetCard';
 import ParticleNetwork from './components/ParticleNetwork';
 import { COURSE_MODULES, TECH_STACK, CHEATSHEETS, MODULE_CATEGORIES } from './constants';
-import { Module } from './types';
-import { executeRCode } from './services/vizService';
+
+const GALLERY_ITEMS = [
+  // Core ggplot2 visualizations
+  { src: '/use_cases/bioinformatics/volcano_plot.png', title: 'Volcano Plot', category: 'Statistical', desc: 'Differential expression analysis' },
+  { src: '/use_cases/bioinformatics/pca_plot.png', title: 'PCA Plot', category: 'Statistical', desc: 'Dimensionality reduction' },
+  { src: '/use_cases/bioinformatics/correlation_plot.png', title: 'Correlation Matrix', category: 'Statistical', desc: 'Variable relationships' },
+  { src: '/use_cases/bioinformatics/gene_expression.png', title: 'Gene Expression', category: 'Statistical', desc: 'Expression level visualization' },
+  { src: '/use_cases/bioinformatics/hypothesis_testing.png', title: 'Hypothesis Testing', category: 'Statistical', desc: 'Statistical significance' },
+  { src: '/use_cases/bioinformatics/microbiome_composition.png', title: 'Microbiome Composition', category: 'Statistical', desc: 'Community abundance profiles' },
+  // Bulk RNA-seq
+  { src: '/use_cases/bioinformatics/bulk/heatmap_plot-1.png', title: 'Heatmap', category: 'Bulk RNA-seq', desc: 'Expression clustering' },
+  { src: '/use_cases/bioinformatics/bulk/volcano_plot-1.png', title: 'DEG Volcano', category: 'Bulk RNA-seq', desc: 'Differentially expressed genes' },
+  { src: '/use_cases/bioinformatics/bulk/ma_plot-1.png', title: 'MA Plot', category: 'Bulk RNA-seq', desc: 'Log-ratio vs abundance' },
+  { src: '/use_cases/bioinformatics/bulk/pca_plot-1.png', title: 'Sample PCA', category: 'Bulk RNA-seq', desc: 'Sample clustering & QC' },
+  { src: '/use_cases/bioinformatics/bulk/go_enrich-1.png', title: 'GO Enrichment', category: 'Bulk RNA-seq', desc: 'Gene ontology analysis' },
+  { src: '/use_cases/bioinformatics/bulk/kegg_enrich-1.png', title: 'KEGG Pathways', category: 'Bulk RNA-seq', desc: 'Pathway enrichment' },
+  { src: '/use_cases/bioinformatics/bulk/dispersions-1.png', title: 'Dispersion Plot', category: 'Bulk RNA-seq', desc: 'DESeq2 dispersion estimates' },
+  { src: '/use_cases/bioinformatics/bulk/single_plot-1.png', title: 'Single Gene', category: 'Bulk RNA-seq', desc: 'Individual gene visualization' },
+  // Single-cell
+  { src: '/use_cases/bioinformatics/single-cell/tsne_umap_cluster.png', title: 'UMAP / t-SNE Clusters', category: 'Single-Cell', desc: 'Cell type clustering' },
+  { src: '/use_cases/bioinformatics/single-cell/featureplot_vlnplot_examples.png', title: 'Feature & Violin Plots', category: 'Single-Cell', desc: 'Marker gene expression' },
+  { src: '/use_cases/bioinformatics/single-cell/vlnplot_QC.png', title: 'QC Violin Plots', category: 'Single-Cell', desc: 'Quality control metrics' },
+  { src: '/use_cases/bioinformatics/single-cell/heatmap_clmarkers.png', title: 'Cluster Markers Heatmap', category: 'Single-Cell', desc: 'Top marker genes per cluster' },
+  { src: '/use_cases/bioinformatics/single-cell/umap_seurat_datasets.png', title: 'Seurat UMAP', category: 'Single-Cell', desc: 'Multi-dataset integration' },
+  { src: '/use_cases/bioinformatics/single-cell/scvelo_DS1_scvelo_stream.png', title: 'RNA Velocity', category: 'Single-Cell', desc: 'Trajectory stream plot' },
+];
+
+const GALLERY_CATEGORIES = ['All', ...Array.from(new Set(GALLERY_ITEMS.map(g => g.category)))];
+
+const VizGallery: React.FC = () => {
+  const [activeFilter, setActiveFilter] = useState('All');
+  const [lightbox, setLightbox] = useState<typeof GALLERY_ITEMS[0] | null>(null);
+
+  const filtered = activeFilter === 'All' ? GALLERY_ITEMS : GALLERY_ITEMS.filter(g => g.category === activeFilter);
+
+  return (
+    <section className="mb-20 md:mb-32">
+      <div className="text-center mb-8 md:mb-12 px-4">
+        <h2 className="text-2xl md:text-3xl font-bold text-slate-900 mb-2">Visualization Gallery</h2>
+        <p className="text-slate-500 text-sm md:text-base">A preview of the plots and figures you'll learn to create.</p>
+      </div>
+
+      {/* Filter Tabs */}
+      <div className="flex flex-wrap justify-center gap-2 mb-8 px-4">
+        {GALLERY_CATEGORIES.map((cat) => (
+          <button
+            key={cat}
+            onClick={() => setActiveFilter(cat)}
+            className={`px-4 py-1.5 rounded-full text-xs font-semibold transition-all duration-200 ${
+              activeFilter === cat
+                ? 'bg-indigo-600 text-white shadow-md shadow-indigo-200'
+                : 'bg-slate-100 text-slate-500 hover:bg-slate-200 hover:text-slate-700'
+            }`}
+          >
+            {cat}
+          </button>
+        ))}
+      </div>
+
+      {/* Gallery Grid */}
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 px-4">
+        {filtered.map((item) => (
+          <div
+            key={item.src}
+            onClick={() => setLightbox(item)}
+            className="group relative bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-xl hover:border-indigo-200 transition-all duration-300 cursor-pointer"
+          >
+            <div className="aspect-[4/3] overflow-hidden bg-slate-50">
+              <img
+                src={item.src}
+                alt={item.title}
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                loading="lazy"
+              />
+            </div>
+            <div className="p-3 md:p-4">
+              <h3 className="text-sm font-bold text-slate-800 truncate">{item.title}</h3>
+              <p className="text-[11px] text-slate-400 mt-0.5">{item.desc}</p>
+            </div>
+            {/* Hover overlay */}
+            <div className="absolute inset-0 bg-gradient-to-t from-indigo-900/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+              <span className="text-white text-xs font-semibold flex items-center gap-1">
+                <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
+                </svg>
+                Click to expand
+              </span>
+            </div>
+            {/* Category badge */}
+            <div className="absolute top-2 right-2 px-2 py-0.5 rounded-full bg-white/90 backdrop-blur-sm text-[10px] font-semibold text-indigo-600 shadow-sm">
+              {item.category}
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Lightbox */}
+      {lightbox && (
+        <div
+          className="fixed inset-0 z-[70] flex items-center justify-center bg-slate-900/80 backdrop-blur-md p-4"
+          onClick={() => setLightbox(null)}
+        >
+          <div
+            className="relative bg-white rounded-2xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-hidden animate-in zoom-in-95 duration-200"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              onClick={() => setLightbox(null)}
+              className="absolute top-3 right-3 z-10 w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center transition-colors"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4 text-slate-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+            <div className="overflow-auto max-h-[75vh] bg-slate-50">
+              <img
+                src={lightbox.src}
+                alt={lightbox.title}
+                className="w-full h-auto object-contain"
+              />
+            </div>
+            <div className="p-4 md:p-5 border-t border-slate-100">
+              <div className="flex items-center gap-3">
+                <span className="px-2.5 py-0.5 rounded-full bg-indigo-50 text-indigo-600 text-xs font-semibold">{lightbox.category}</span>
+                <h3 className="text-lg font-bold text-slate-900">{lightbox.title}</h3>
+              </div>
+              <p className="text-sm text-slate-500 mt-1">{lightbox.desc}</p>
+            </div>
+          </div>
+        </div>
+      )}
+    </section>
+  );
+};
 
 const HomePage: React.FC = () => {
-  const [selectedModule, setSelectedModule] = useState<Module | null>(null);
-  const [isRunning, setIsRunning] = useState(false);
-  const [outputImage, setOutputImage] = useState<string | null>(null);
-  const [runLogs, setRunLogs] = useState<string[]>([]);
-  const [error, setError] = useState<string | null>(null);
-
-  const handleRunCode = async (code: string) => {
-    setIsRunning(true);
-    setError(null);
-    setOutputImage(null);
-    setRunLogs([]);
-
-    const initialLogs = [
-      "> Initializing R session...",
-      "> Checking environment variables...",
-      "> Loading library(ggplot2)...",
-      "> Loading library(tidyverse)...",
-      "> Reading dataset..."
-    ];
-
-    for (let i = 0; i < initialLogs.length; i++) {
-      await new Promise(r => setTimeout(r, 100 + i * 50));
-      setRunLogs(prev => [...prev, initialLogs[i]]);
-    }
-
-    try {
-      const executionPromise = executeRCode(code);
-      const logSteps = ["> Mapping aesthetics...", "> Rendering graphics..."];
-      let logIndex = 0;
-      const logInterval = setInterval(() => {
-        if (logIndex < logSteps.length) {
-          setRunLogs(prev => [...prev, logSteps[logIndex]]);
-          logIndex++;
-        } else {
-          clearInterval(logInterval);
-        }
-      }, 400);
-
-      const imageUrl = await executionPromise;
-      clearInterval(logInterval);
-      setOutputImage(imageUrl);
-      setRunLogs(prev => [...prev, "> Plot generated successfully."]);
-    } catch (err) {
-      setError("Execution failed.");
-    } finally {
-      setIsRunning(false);
-    }
-  };
 
   return (
     <>
@@ -170,7 +253,7 @@ const HomePage: React.FC = () => {
                 <div className="w-12 h-1 bg-indigo-500 rounded-full mb-6"></div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
                   {modules.map((module) => (
-                    <ModuleCard key={module.id} module={module} onSelect={setSelectedModule} />
+                    <ModuleCard key={module.id} module={module} />
                   ))}
                 </div>
               </div>
@@ -178,6 +261,43 @@ const HomePage: React.FC = () => {
           })}
         </div>
       </section>
+
+      {/* Packages Section */}
+      <section className="mb-20 md:mb-32">
+        <div className="text-center mb-8 md:mb-12 px-4">
+          <h2 className="text-2xl md:text-3xl font-bold text-slate-900 mb-2">Packages We Cover</h2>
+          <p className="text-slate-500 text-sm md:text-base">The R ecosystem tools you'll master throughout this journey.</p>
+        </div>
+        <div className="flex flex-wrap justify-center items-center gap-6 md:gap-10 px-4">
+          {[
+            { src: '/hex/ggplot2_logo.png', name: 'ggplot2' },
+            { src: '/hex/tidyplots_logo.png', name: 'tidyplots' },
+            { src: '/hex/ggsci_logo.png', name: 'ggsci' },
+            { src: '/hex/pathwork_logo.svg', name: 'patchwork' },
+            { src: '/hex/plotly2.png', name: 'plotly' },
+            { src: '/hex/logo-tidyr.png', name: 'tidyr' },
+            { src: '/hex/logo-readr.png', name: 'readr' },
+            { src: '/hex/logo-stringr.png', name: 'stringr' },
+            { src: '/hex/logo-lubridate.png', name: 'lubridate' },
+            { src: '/hex/logo-gt.png', name: 'gt' },
+            { src: '/hex/gtsummary_logo.png', name: 'gtsummary' },
+            { src: '/hex/logo-shiny.png', name: 'shiny' },
+            { src: '/hex/quarto.png', name: 'Quarto' },
+          ].map((pkg) => (
+            <div key={pkg.name} className="group flex flex-col items-center">
+              <img
+                src={pkg.src}
+                alt={`${pkg.name} hex sticker`}
+                className="w-20 h-23 md:w-24 md:h-28 object-contain drop-shadow-md transition-transform duration-200 group-hover:scale-110 group-hover:-translate-y-1"
+              />
+              <span className="mt-2 text-xs font-medium text-slate-500 group-hover:text-indigo-600 transition-colors">{pkg.name}</span>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Visualization Gallery Section */}
+      <VizGallery />
 
       {/* Cheatsheets Section */}
       <section className="mb-20 md:mb-32">
@@ -200,65 +320,6 @@ const HomePage: React.FC = () => {
         </div>
       </section>
 
-      {/* Module Modal Overlay */}
-      {selectedModule && (
-        <div className="fixed inset-0 z-[60] flex items-end sm:items-center justify-center p-0 sm:p-4 bg-slate-900/60 backdrop-blur-sm">
-          <div className="bg-white w-full max-w-5xl h-[95vh] sm:h-auto sm:max-h-[90vh] rounded-t-3xl sm:rounded-3xl shadow-2xl flex flex-col animate-in slide-in-from-bottom duration-300">
-            <div className="p-5 md:p-6 border-b border-slate-100 flex items-center justify-between bg-white shrink-0">
-              <div className="flex items-center space-x-3 md:space-x-4">
-                <div className="text-2xl md:text-3xl shrink-0">{selectedModule.icon}</div>
-                <div>
-                    <h3 className="text-lg md:text-2xl font-bold text-slate-900 line-clamp-1">{selectedModule.title}</h3>
-                    <p className="text-[10px] md:text-sm text-slate-500 uppercase font-semibold tracking-wider">{selectedModule.level} • {selectedModule.duration}</p>
-                </div>
-              </div>
-              <button 
-                onClick={() => setSelectedModule(null)}
-                className="p-2 hover:bg-slate-100 rounded-full transition-colors shrink-0"
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </button>
-            </div>
-
-            <div className="flex-grow overflow-y-auto custom-scrollbar p-5 md:p-8">
-              <div className="flex flex-col lg:grid lg:grid-cols-12 gap-8 md:gap-12">
-                <div className="lg:col-span-5 space-y-6 md:space-y-8 order-2 lg:order-1">
-                  <div>
-                    <h4 className="text-sm md:text-lg font-bold text-slate-800 mb-3 border-l-4 border-indigo-500 pl-3">Learning Content</h4>
-                    <p className="text-slate-600 leading-relaxed text-sm md:text-base">{selectedModule.content}</p>
-                  </div>
-                  <div>
-                    <h4 className="text-sm md:text-lg font-bold text-slate-800 mb-3 border-l-4 border-emerald-500 pl-3">R Script</h4>
-                    <CodeBlock code={selectedModule.codeExample} />
-                    <button 
-                      onClick={() => handleRunCode(selectedModule.codeExample)}
-                      disabled={isRunning}
-                      className="w-full mt-6 bg-indigo-600 hover:bg-indigo-700 text-white py-4 rounded-xl font-bold shadow-lg flex items-center justify-center disabled:opacity-50"
-                    >
-                      {isRunning ? "Executing..." : "Run in Browser"}
-                    </button>
-                  </div>
-                </div>
-                <div className="lg:col-span-7 flex flex-col space-y-4 md:space-y-6 order-1 lg:order-2">
-                  <div className="bg-slate-100 rounded-2xl md:rounded-3xl border border-slate-200 flex flex-col overflow-hidden min-h-[300px] md:min-h-[400px]">
-                    <div className="px-4 py-2 bg-white border-b border-slate-200">
-                        <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Plot Result</span>
-                    </div>
-                    <div className="flex-grow flex items-center justify-center p-4 md:p-8 bg-white">
-                      {outputImage ? <img src={outputImage} className="max-w-full max-h-full rounded-lg" /> : <p className="text-slate-300">Click Run to generate plot.</p>}
-                    </div>
-                  </div>
-                  <div className="h-32 md:h-44 bg-slate-900 rounded-xl p-3 text-emerald-400 font-mono text-[10px] overflow-y-auto">
-                    {runLogs.map((log, i) => <div key={i}>{log}</div>)}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
     </>
   );

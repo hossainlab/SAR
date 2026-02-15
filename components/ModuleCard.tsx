@@ -4,16 +4,14 @@ import { Module } from '../types';
 
 interface ModuleCardProps {
   module: Module;
-  onSelect: (module: Module) => void;
 }
 
-const ModuleCard: React.FC<ModuleCardProps> = ({ module, onSelect }) => {
+const ModuleCard: React.FC<ModuleCardProps> = ({ module }) => {
   return (
-    <div 
-      onClick={() => onSelect(module)}
-      className="bg-white rounded-2xl border border-slate-200 p-6 hover:shadow-xl hover:border-indigo-300 transition-all cursor-pointer group flex flex-col h-full"
+    <div
+      className="bg-white rounded-2xl border border-slate-200 p-6 hover:shadow-lg hover:border-indigo-200 transition-all group flex flex-col h-full"
     >
-      <div className="text-4xl mb-4 group-hover:scale-110 transition-transform duration-300">
+      <div className="text-4xl mb-4">
         {module.icon}
       </div>
       <div className="flex items-center space-x-2 mb-2">
@@ -26,18 +24,12 @@ const ModuleCard: React.FC<ModuleCardProps> = ({ module, onSelect }) => {
         </span>
         <span className="text-xs text-slate-400 font-medium">• {module.duration}</span>
       </div>
-      <h3 className="text-xl font-bold text-slate-900 mb-2 group-hover:text-indigo-600 transition-colors">
+      <h3 className="text-xl font-bold text-slate-900 mb-2">
         {module.title}
       </h3>
-      <p className="text-slate-600 text-sm mb-4 flex-grow">
+      <p className="text-slate-600 text-sm flex-grow">
         {module.description}
       </p>
-      <div className="flex items-center text-indigo-600 font-semibold text-sm">
-        Start Module
-        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-        </svg>
-      </div>
     </div>
   );
 };
