@@ -39,6 +39,7 @@ export const MODULE_CATEGORIES = [
   'Data Manipulation with R',
   'Publication-ready Tables with R',
   'Visualization',
+  'AI Coding Assistants',
 ] as const;
 
 export const COURSE_MODULES: Module[] = [
@@ -213,5 +214,39 @@ export const COURSE_MODULES: Module[] = [
     category: 'Visualization',
     content: 'Faceting creates small multiples – copies of a plot that each show a different subset of the data. Combined with custom scales, this is a powerful tool for exploratory data analysis.',
     codeExample: `ggplot(mpg, aes(displ, hwy)) + \n  geom_point() + \n  facet_wrap(~class, nrow = 2) + \n  scale_y_continuous(labels = scales::comma)`
+  },
+  // ── AI Coding Assistants ──
+  {
+    id: 'ai-assisted-r',
+    title: 'AI-Assisted R Programming',
+    description: 'Learn how to use AI coding assistants like GitHub Copilot and ChatGPT to write, debug, and optimize R code faster.',
+    level: 'Beginner',
+    duration: '60 mins',
+    icon: '🤖',
+    category: 'AI Coding Assistants',
+    content: 'AI coding assistants can dramatically speed up your R workflow. Learn how to write effective prompts, generate boilerplate code, get instant explanations of complex functions, and use AI to troubleshoot errors — while understanding when to trust and when to verify AI-generated code.',
+    codeExample: `# Example: Using AI to generate a ggplot\n# Prompt: "Create a boxplot of mpg by cylinder count\n# with a minimal theme and custom colors"\n\nggplot(mtcars, aes(factor(cyl), mpg, fill = factor(cyl))) +\n  geom_boxplot(alpha = 0.8) +\n  scale_fill_brewer(palette = "Set2") +\n  labs(x = "Cylinders", y = "Miles per Gallon") +\n  theme_minimal() +\n  theme(legend.position = "none")`
+  },
+  {
+    id: 'prompt-engineering-r',
+    title: 'Prompt Engineering for Data Analysis',
+    description: 'Master the art of writing precise prompts to get accurate R code, statistical analyses, and data visualizations from AI tools.',
+    level: 'Intermediate',
+    duration: '75 mins',
+    icon: '💬',
+    category: 'AI Coding Assistants',
+    content: 'The quality of AI output depends entirely on your prompts. Learn structured prompting techniques for data wrangling, statistical modeling, and visualization tasks. Discover how to provide context about your dataset, specify output formats, and iteratively refine AI-generated code for publication-quality results.',
+    codeExample: `# Structured prompt example:\n# "I have a clinical trial dataset with columns:\n# patient_id, treatment_group, baseline_score,\n# week4_score, week8_score.\n# Create a gtsummary table comparing baseline\n# characteristics by treatment group with p-values."\n\nlibrary(gtsummary)\ntrial_data %>%\n  select(treatment_group, age, grade, stage) %>%\n  tbl_summary(by = treatment_group) %>%\n  add_p() %>%\n  bold_p()`
+  },
+  {
+    id: 'ai-reproducible-research',
+    title: 'AI Tools for Reproducible Research',
+    description: 'Integrate AI assistants into your reproducible research workflow with Quarto, version control, and automated reporting.',
+    level: 'Advanced',
+    duration: '80 mins',
+    icon: '🔬',
+    category: 'AI Coding Assistants',
+    content: 'Combine AI coding assistants with modern reproducible research practices. Learn to use AI for generating Quarto documents, automating repetitive analysis pipelines, writing documentation, and creating reproducible workflows — while maintaining scientific rigor and transparency about AI usage in your publications.',
+    codeExample: `# AI-assisted Quarto workflow\n# Use AI to generate report templates:\n\n---\ntitle: "Differential Expression Analysis"\nformat: html\nexecute:\n  echo: true\n  warning: false\n---\n\n# AI can help structure your analysis:\n# 1. Data loading & QC\n# 2. Normalization\n# 3. Statistical testing\n# 4. Visualization\n# 5. Interpretation`
   }
 ];

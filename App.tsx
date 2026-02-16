@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React from 'react';
 import { HashRouter, Routes, Route, Link } from 'react-router-dom';
 import Layout from './components/Layout';
 import ModuleCard from './components/ModuleCard';
@@ -7,139 +7,7 @@ import CheatsheetCard from './components/CheatsheetCard';
 import ParticleNetwork from './components/ParticleNetwork';
 import { COURSE_MODULES, TECH_STACK, CHEATSHEETS, MODULE_CATEGORIES } from './constants';
 
-const GALLERY_ITEMS = [
-  // Core ggplot2 visualizations
-  { src: '/use_cases/bioinformatics/volcano_plot.png', title: 'Volcano Plot', category: 'Statistical', desc: 'Differential expression analysis' },
-  { src: '/use_cases/bioinformatics/pca_plot.png', title: 'PCA Plot', category: 'Statistical', desc: 'Dimensionality reduction' },
-  { src: '/use_cases/bioinformatics/correlation_plot.png', title: 'Correlation Matrix', category: 'Statistical', desc: 'Variable relationships' },
-  { src: '/use_cases/bioinformatics/gene_expression.png', title: 'Gene Expression', category: 'Statistical', desc: 'Expression level visualization' },
-  { src: '/use_cases/bioinformatics/hypothesis_testing.png', title: 'Hypothesis Testing', category: 'Statistical', desc: 'Statistical significance' },
-  { src: '/use_cases/bioinformatics/microbiome_composition.png', title: 'Microbiome Composition', category: 'Statistical', desc: 'Community abundance profiles' },
-  // Bulk RNA-seq
-  { src: '/use_cases/bioinformatics/bulk/heatmap_plot-1.png', title: 'Heatmap', category: 'Bulk RNA-seq', desc: 'Expression clustering' },
-  { src: '/use_cases/bioinformatics/bulk/volcano_plot-1.png', title: 'DEG Volcano', category: 'Bulk RNA-seq', desc: 'Differentially expressed genes' },
-  { src: '/use_cases/bioinformatics/bulk/ma_plot-1.png', title: 'MA Plot', category: 'Bulk RNA-seq', desc: 'Log-ratio vs abundance' },
-  { src: '/use_cases/bioinformatics/bulk/pca_plot-1.png', title: 'Sample PCA', category: 'Bulk RNA-seq', desc: 'Sample clustering & QC' },
-  { src: '/use_cases/bioinformatics/bulk/go_enrich-1.png', title: 'GO Enrichment', category: 'Bulk RNA-seq', desc: 'Gene ontology analysis' },
-  { src: '/use_cases/bioinformatics/bulk/kegg_enrich-1.png', title: 'KEGG Pathways', category: 'Bulk RNA-seq', desc: 'Pathway enrichment' },
-  { src: '/use_cases/bioinformatics/bulk/dispersions-1.png', title: 'Dispersion Plot', category: 'Bulk RNA-seq', desc: 'DESeq2 dispersion estimates' },
-  { src: '/use_cases/bioinformatics/bulk/single_plot-1.png', title: 'Single Gene', category: 'Bulk RNA-seq', desc: 'Individual gene visualization' },
-  // Single-cell
-  { src: '/use_cases/bioinformatics/single-cell/tsne_umap_cluster.png', title: 'UMAP / t-SNE Clusters', category: 'Single-Cell', desc: 'Cell type clustering' },
-  { src: '/use_cases/bioinformatics/single-cell/featureplot_vlnplot_examples.png', title: 'Feature & Violin Plots', category: 'Single-Cell', desc: 'Marker gene expression' },
-  { src: '/use_cases/bioinformatics/single-cell/vlnplot_QC.png', title: 'QC Violin Plots', category: 'Single-Cell', desc: 'Quality control metrics' },
-  { src: '/use_cases/bioinformatics/single-cell/heatmap_clmarkers.png', title: 'Cluster Markers Heatmap', category: 'Single-Cell', desc: 'Top marker genes per cluster' },
-  { src: '/use_cases/bioinformatics/single-cell/umap_seurat_datasets.png', title: 'Seurat UMAP', category: 'Single-Cell', desc: 'Multi-dataset integration' },
-  { src: '/use_cases/bioinformatics/single-cell/scvelo_DS1_scvelo_stream.png', title: 'RNA Velocity', category: 'Single-Cell', desc: 'Trajectory stream plot' },
-];
 
-const GALLERY_CATEGORIES = ['All', ...Array.from(new Set(GALLERY_ITEMS.map(g => g.category)))];
-
-const VizGallery: React.FC = () => {
-  const [activeFilter, setActiveFilter] = useState('All');
-  const [lightbox, setLightbox] = useState<typeof GALLERY_ITEMS[0] | null>(null);
-
-  const filtered = activeFilter === 'All' ? GALLERY_ITEMS : GALLERY_ITEMS.filter(g => g.category === activeFilter);
-
-  return (
-    <section className="mb-20 md:mb-32">
-      <div className="text-center mb-8 md:mb-12 px-4">
-        <h2 className="text-2xl md:text-3xl font-bold text-slate-900 mb-2">Visualization Gallery</h2>
-        <p className="text-slate-500 text-sm md:text-base">A preview of the plots and figures you'll learn to create.</p>
-      </div>
-
-      {/* Filter Tabs */}
-      <div className="flex flex-wrap justify-center gap-2 mb-8 px-4">
-        {GALLERY_CATEGORIES.map((cat) => (
-          <button
-            key={cat}
-            onClick={() => setActiveFilter(cat)}
-            className={`px-4 py-1.5 rounded-full text-xs font-semibold transition-all duration-200 ${
-              activeFilter === cat
-                ? 'bg-indigo-600 text-white shadow-md shadow-indigo-200'
-                : 'bg-slate-100 text-slate-500 hover:bg-slate-200 hover:text-slate-700'
-            }`}
-          >
-            {cat}
-          </button>
-        ))}
-      </div>
-
-      {/* Gallery Grid */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 px-4">
-        {filtered.map((item) => (
-          <div
-            key={item.src}
-            onClick={() => setLightbox(item)}
-            className="group relative bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-xl hover:border-indigo-200 transition-all duration-300 cursor-pointer"
-          >
-            <div className="aspect-[4/3] overflow-hidden bg-slate-50">
-              <img
-                src={item.src}
-                alt={item.title}
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                loading="lazy"
-              />
-            </div>
-            <div className="p-3 md:p-4">
-              <h3 className="text-sm font-bold text-slate-800 truncate">{item.title}</h3>
-              <p className="text-[11px] text-slate-400 mt-0.5">{item.desc}</p>
-            </div>
-            {/* Hover overlay */}
-            <div className="absolute inset-0 bg-gradient-to-t from-indigo-900/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
-              <span className="text-white text-xs font-semibold flex items-center gap-1">
-                <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
-                </svg>
-                Click to expand
-              </span>
-            </div>
-            {/* Category badge */}
-            <div className="absolute top-2 right-2 px-2 py-0.5 rounded-full bg-white/90 backdrop-blur-sm text-[10px] font-semibold text-indigo-600 shadow-sm">
-              {item.category}
-            </div>
-          </div>
-        ))}
-      </div>
-
-      {/* Lightbox */}
-      {lightbox && (
-        <div
-          className="fixed inset-0 z-[70] flex items-center justify-center bg-slate-900/80 backdrop-blur-md p-4"
-          onClick={() => setLightbox(null)}
-        >
-          <div
-            className="relative bg-white rounded-2xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-hidden animate-in zoom-in-95 duration-200"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <button
-              onClick={() => setLightbox(null)}
-              className="absolute top-3 right-3 z-10 w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center transition-colors"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4 text-slate-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </button>
-            <div className="overflow-auto max-h-[75vh] bg-slate-50">
-              <img
-                src={lightbox.src}
-                alt={lightbox.title}
-                className="w-full h-auto object-contain"
-              />
-            </div>
-            <div className="p-4 md:p-5 border-t border-slate-100">
-              <div className="flex items-center gap-3">
-                <span className="px-2.5 py-0.5 rounded-full bg-indigo-50 text-indigo-600 text-xs font-semibold">{lightbox.category}</span>
-                <h3 className="text-lg font-bold text-slate-900">{lightbox.title}</h3>
-              </div>
-              <p className="text-sm text-slate-500 mt-1">{lightbox.desc}</p>
-            </div>
-          </div>
-        </div>
-      )}
-    </section>
-  );
-};
 
 const HomePage: React.FC = () => {
 
@@ -182,8 +50,8 @@ const HomePage: React.FC = () => {
       {/* Package Ecosystem Section */}
       <section className="mb-20 md:mb-32">
         <div className="text-center mb-12">
-          <h2 className="text-2xl md:text-3xl font-bold text-slate-900 mb-3">The Tidyverse Ecosystem</h2>
-          <p className="text-slate-500 text-sm md:text-base">Master the powerful tools used by modern data scientists.</p>
+          <h2 className="text-2xl md:text-3xl font-bold text-slate-900 mb-3">Your Data Analysis Workflow</h2>
+          <p className="text-slate-500 text-sm md:text-base">A step-by-step pipeline from raw data to polished results — using the most popular R packages.</p>
         </div>
         <div className="px-4 max-w-5xl mx-auto">
           {/* Workflow Steps */}
@@ -234,6 +102,74 @@ const HomePage: React.FC = () => {
         </div>
       </section>
 
+      {/* Who Is This For Section */}
+      <section className="mb-20 md:mb-32">
+        <div className="text-center mb-10 md:mb-14 px-4">
+          <h2 className="text-2xl md:text-3xl font-bold text-slate-900 mb-2">Who Is This Course For?</h2>
+          <p className="text-slate-500 text-sm md:text-base max-w-2xl mx-auto">If you work with data and want to level up your research, this course is built for you.</p>
+        </div>
+
+        <div className="px-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6 mb-10">
+            {[
+              {
+                icon: <path strokeLinecap="round" strokeLinejoin="round" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />,
+                title: 'Graduate Students & PhD Researchers',
+                desc: 'Working on a thesis or dissertation that involves quantitative data? Learn to analyze, visualize, and present your findings with confidence.',
+              },
+              {
+                icon: <path strokeLinecap="round" strokeLinejoin="round" d="M4.26 10.147a60.436 60.436 0 00-.491 6.347A48.627 48.627 0 0112 20.904a48.627 48.627 0 018.232-4.41 60.46 60.46 0 00-.491-6.347m-15.482 0a50.57 50.57 0 00-2.658-.813A59.905 59.905 0 0112 3.493a59.902 59.902 0 0110.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.697 50.697 0 0112 13.489a50.702 50.702 0 017.74-3.342M6.75 15a.75.75 0 100-1.5.75.75 0 000 1.5zm0 0v-3.675A55.378 55.378 0 0112 8.443m-7.007 11.55A5.981 5.981 0 006.75 15.75v-1.5" />,
+                title: 'Faculty & University Lecturers',
+                desc: 'Strengthen your research publications with reproducible analyses, professional-grade tables, and journal-ready figures.',
+              },
+              {
+                icon: <path strokeLinecap="round" strokeLinejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />,
+                title: 'Public Health & Clinical Researchers',
+                desc: 'Analyze survey data, clinical trials, and epidemiological datasets. Create publication-ready summary tables in minutes.',
+              },
+              {
+                icon: <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 3v11.25A2.25 2.25 0 006 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0118 16.5h-2.25m-7.5 0h7.5m-7.5 0l-1 3m8.5-3l1 3m0 0l.5 1.5m-.5-1.5h-9.5m0 0l-.5 1.5m.75-9l3-3 2.148 2.148A12.061 12.061 0 0116.5 7.605" />,
+                title: 'Bioinformaticians & Data Analysts',
+                desc: 'Master ggplot2 for omics data visualization, build automated pipelines, and communicate complex results clearly.',
+              },
+              {
+                icon: <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />,
+                title: 'Self-Learners & Career Switchers',
+                desc: 'No prior R experience needed. Start from the basics and build real-world skills that employers and journals value.',
+              },
+              {
+                icon: <path strokeLinecap="round" strokeLinejoin="round" d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z" />,
+                title: 'Anyone Passionate About Research',
+                desc: 'Whether in biology, social science, agriculture, or environmental science — if your work involves data, this course will transform how you do research.',
+              },
+            ].map((item) => (
+              <div key={item.title} className="group bg-white rounded-2xl border border-slate-200 p-6 md:p-7 transition-all duration-300 hover:shadow-lg hover:border-indigo-200 hover:-translate-y-1">
+                <div className="w-11 h-11 rounded-xl bg-indigo-50 flex items-center justify-center mb-5 group-hover:bg-indigo-100 transition-colors">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                    {item.icon}
+                  </svg>
+                </div>
+                <h3 className="text-base font-bold text-slate-900 mb-2">{item.title}</h3>
+                <p className="text-sm text-slate-500 leading-relaxed">{item.desc}</p>
+              </div>
+            ))}
+          </div>
+
+          {/* No prerequisites callout */}
+          <div className="max-w-3xl mx-auto bg-indigo-50 rounded-2xl p-5 md:p-6 border border-indigo-100 flex flex-col sm:flex-row items-center gap-4">
+            <div className="w-11 h-11 rounded-xl bg-white flex items-center justify-center shrink-0 shadow-sm">
+              <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </div>
+            <div className="text-center sm:text-left">
+              <p className="text-sm font-bold text-slate-900 mb-0.5">No prerequisites required</p>
+              <p className="text-xs text-slate-500">You don't need prior programming or statistics experience. We start from scratch and build up — all you need is curiosity and a willingness to learn.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Curriculum Grid */}
       <section id="curriculum" className="mb-20 md:mb-32">
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 md:mb-12 px-4">
@@ -270,34 +206,411 @@ const HomePage: React.FC = () => {
         </div>
         <div className="flex flex-wrap justify-center items-center gap-6 md:gap-10 px-4">
           {[
-            { src: '/hex/ggplot2_logo.png', name: 'ggplot2' },
-            { src: '/hex/tidyplots_logo.png', name: 'tidyplots' },
-            { src: '/hex/ggsci_logo.png', name: 'ggsci' },
-            { src: '/hex/pathwork_logo.svg', name: 'patchwork' },
-            { src: '/hex/plotly2.png', name: 'plotly' },
-            { src: '/hex/logo-tidyr.png', name: 'tidyr' },
-            { src: '/hex/logo-readr.png', name: 'readr' },
-            { src: '/hex/logo-stringr.png', name: 'stringr' },
-            { src: '/hex/logo-lubridate.png', name: 'lubridate' },
-            { src: '/hex/logo-gt.png', name: 'gt' },
-            { src: '/hex/gtsummary_logo.png', name: 'gtsummary' },
-            { src: '/hex/logo-shiny.png', name: 'shiny' },
-            { src: '/hex/quarto.png', name: 'Quarto' },
+            { src: '/hex/tidyverse.svg', name: 'tidyverse', url: 'https://www.tidyverse.org/' },
+            { src: '/hex/ggplot2_logo.png', name: 'ggplot2', url: 'https://ggplot2.tidyverse.org/' },
+            { src: '/hex/tidyplots_logo.png', name: 'tidyplots', url: 'https://jbengler.github.io/tidyplots/' },
+            { src: '/hex/ggsci_logo.png', name: 'ggsci', url: 'https://nanx.me/ggsci/' },
+            { src: '/hex/pathwork_logo.svg', name: 'patchwork', url: 'https://patchwork.data-imaginist.com/' },
+            { src: '/hex/plotly2.png', name: 'plotly', url: 'https://plotly.com/r/' },
+            { src: '/hex/logo-tidyr.png', name: 'tidyr', url: 'https://tidyr.tidyverse.org/' },
+            { src: '/hex/logo-readr.png', name: 'readr', url: 'https://readr.tidyverse.org/' },
+            { src: '/hex/logo-stringr.png', name: 'stringr', url: 'https://stringr.tidyverse.org/' },
+            { src: '/hex/logo-lubridate.png', name: 'lubridate', url: 'https://lubridate.tidyverse.org/' },
+            { src: '/hex/logo-gt.png', name: 'gt', url: 'https://gt.rstudio.com/' },
+            { src: '/hex/gtsummary_logo.png', name: 'gtsummary', url: 'https://www.danieldsjoberg.com/gtsummary/' },
+            { src: '/hex/logo-shiny.png', name: 'shiny', url: 'https://shiny.posit.co/' },
+            { src: '/hex/quarto.png', name: 'Quarto', url: 'https://quarto.org/' },
           ].map((pkg) => (
-            <div key={pkg.name} className="group flex flex-col items-center">
+            <a key={pkg.name} href={pkg.url} target="_blank" rel="noopener noreferrer" className="group flex flex-col items-center">
               <img
                 src={pkg.src}
                 alt={`${pkg.name} hex sticker`}
                 className="w-20 h-23 md:w-24 md:h-28 object-contain drop-shadow-md transition-transform duration-200 group-hover:scale-110 group-hover:-translate-y-1"
               />
               <span className="mt-2 text-xs font-medium text-slate-500 group-hover:text-indigo-600 transition-colors">{pkg.name}</span>
-            </div>
+            </a>
           ))}
         </div>
       </section>
 
-      {/* Visualization Gallery Section */}
-      <VizGallery />
+      {/* Publication-Ready Tables Section — Full-width cinematic */}
+      </div>
+      <section className="mb-20 md:mb-32 bg-slate-950 py-16 md:py-24 relative overflow-hidden">
+        {/* Subtle grid pattern */}
+        <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: 'linear-gradient(rgba(255,255,255,.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.1) 1px, transparent 1px)', backgroundSize: '40px 40px' }}></div>
+        {/* Glow accents */}
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-emerald-500/10 rounded-full blur-[120px]"></div>
+        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-violet-500/10 rounded-full blur-[120px]"></div>
+
+        <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Header */}
+          <div className="text-center mb-12 md:mb-16">
+            <div className="inline-block bg-emerald-500/10 text-emerald-400 px-4 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest mb-4 border border-emerald-500/20">
+              From Data to Publication
+            </div>
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4 tracking-tight">
+              Publication-Ready Tables
+            </h2>
+            <p className="text-slate-400 text-sm md:text-lg max-w-2xl mx-auto leading-relaxed">
+              Create journal-quality summary and regression tables in seconds with <code className="text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded text-xs md:text-sm font-mono font-semibold">gtsummary</code>
+            </p>
+          </div>
+
+          {/* GIF Showcases */}
+          <div className="space-y-10 md:space-y-14">
+            {/* Summary Table */}
+            <div className="group">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-8 h-8 rounded-lg bg-emerald-500/20 flex items-center justify-center">
+                  <div className="w-2.5 h-2.5 rounded-full bg-emerald-400"></div>
+                </div>
+                <div>
+                  <h3 className="text-lg font-bold text-white">Descriptive Summary Table</h3>
+                  <p className="text-xs text-slate-500">tbl_summary() — demographics, clinical variables & more</p>
+                </div>
+              </div>
+              <div className="rounded-2xl overflow-hidden border border-slate-800 shadow-2xl shadow-black/40 group-hover:border-slate-700 transition-colors duration-300">
+                <div className="bg-slate-900 px-4 py-2.5 flex items-center gap-2 border-b border-slate-800">
+                  <div className="flex gap-1.5">
+                    <div className="w-2.5 h-2.5 rounded-full bg-red-500/70"></div>
+                    <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/70"></div>
+                    <div className="w-2.5 h-2.5 rounded-full bg-green-500/70"></div>
+                  </div>
+                  <span className="text-[10px] text-slate-500 font-mono ml-2">tbl_summary_demo.R</span>
+                </div>
+                <div className="aspect-[16/10] bg-white">
+                  <img
+                    src="/workflow/tbl_summary_demo1.gif"
+                    alt="tbl_summary demo — creating publication-ready summary tables"
+                    className="w-full h-full object-contain"
+                    loading="lazy"
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* Regression Table */}
+            <div className="group">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-8 h-8 rounded-lg bg-violet-500/20 flex items-center justify-center">
+                  <div className="w-2.5 h-2.5 rounded-full bg-violet-400"></div>
+                </div>
+                <div>
+                  <h3 className="text-lg font-bold text-white">Regression Results Table</h3>
+                  <p className="text-xs text-slate-500">tbl_regression() — model summaries with confidence intervals</p>
+                </div>
+              </div>
+              <div className="rounded-2xl overflow-hidden border border-slate-800 shadow-2xl shadow-black/40 group-hover:border-slate-700 transition-colors duration-300">
+                <div className="bg-slate-900 px-4 py-2.5 flex items-center gap-2 border-b border-slate-800">
+                  <div className="flex gap-1.5">
+                    <div className="w-2.5 h-2.5 rounded-full bg-red-500/70"></div>
+                    <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/70"></div>
+                    <div className="w-2.5 h-2.5 rounded-full bg-green-500/70"></div>
+                  </div>
+                  <span className="text-[10px] text-slate-500 font-mono ml-2">tbl_regression_demo.R</span>
+                </div>
+                <div className="aspect-[16/10] bg-white">
+                  <img
+                    src="/workflow/tbl_mvregression_demo.gif"
+                    alt="tbl_regression demo — creating publication-ready regression tables"
+                    className="w-full h-full object-contain"
+                    loading="lazy"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Export formats bar */}
+          <div className="mt-12 md:mt-16 flex flex-wrap justify-center gap-3 md:gap-4">
+            {[
+              { label: 'Word', icon: 'W' },
+              { label: 'PDF', icon: 'P' },
+              { label: 'HTML', icon: 'H' },
+              { label: 'LaTeX', icon: 'L' },
+            ].map((fmt) => (
+              <div key={fmt.label} className="flex items-center gap-2 bg-slate-800/60 backdrop-blur-sm px-4 py-2.5 rounded-xl border border-slate-700/50">
+                <div className="w-6 h-6 rounded-md bg-emerald-500/20 flex items-center justify-center text-emerald-400 text-[10px] font-bold">{fmt.icon}</div>
+                <span className="text-sm text-slate-300 font-medium">{fmt.label}</span>
+              </div>
+            ))}
+          </div>
+          <p className="text-center text-xs text-slate-600 mt-4">Export to any format — ready for journal submission without copy-pasting.</p>
+        </div>
+      </section>
+      {/* Publication-Ready Figures Section */}
+      <section className="mb-20 md:mb-32 bg-gradient-to-b from-slate-50 to-white py-16 md:py-24 relative overflow-hidden">
+        {/* Decorative blobs */}
+        <div className="absolute top-20 -left-32 w-80 h-80 bg-indigo-100/40 rounded-full blur-[100px]"></div>
+        <div className="absolute bottom-10 -right-32 w-80 h-80 bg-violet-100/40 rounded-full blur-[100px]"></div>
+
+        <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Header */}
+          <div className="text-center mb-12 md:mb-16">
+            <div className="inline-block bg-indigo-50 text-indigo-600 px-4 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest mb-4 border border-indigo-100">
+              Choose the Right Chart
+            </div>
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-slate-900 mb-4 tracking-tight">
+              Publication-Ready Figures
+            </h2>
+            <p className="text-slate-500 text-sm md:text-lg max-w-2xl mx-auto leading-relaxed">
+              Not sure which chart to use? This decision tree guides you from your data type to the perfect visualization — every time.
+            </p>
+          </div>
+
+          {/* Decision Tree Showcase */}
+          <div className="relative group">
+            {/* Outer glow on hover */}
+            <div className="absolute -inset-1 bg-gradient-to-r from-indigo-200 via-violet-200 to-purple-200 rounded-3xl opacity-0 group-hover:opacity-60 blur-xl transition-opacity duration-500"></div>
+
+            <div className="relative bg-white rounded-3xl border border-slate-200 shadow-lg overflow-hidden">
+              {/* Title bar */}
+              <div className="px-5 md:px-6 py-3.5 border-b border-slate-100 flex items-center justify-between bg-white">
+                <div className="flex items-center gap-3">
+                  <div className="flex gap-1.5">
+                    <div className="w-2.5 h-2.5 rounded-full bg-red-400"></div>
+                    <div className="w-2.5 h-2.5 rounded-full bg-amber-400"></div>
+                    <div className="w-2.5 h-2.5 rounded-full bg-emerald-400"></div>
+                  </div>
+                  <span className="text-xs text-slate-400 font-mono">from_data_to_viz.R</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="px-2.5 py-0.5 rounded-full bg-indigo-50 text-indigo-600 text-[10px] font-bold border border-indigo-100">Interactive Guide</span>
+                </div>
+              </div>
+
+              {/* Image */}
+              <div className="p-4 md:p-6 bg-slate-50/50">
+                <img
+                  src="/workflow/poster_small.png"
+                  alt="From Data to Viz — a decision tree for choosing the right chart type"
+                  className="w-full h-auto rounded-xl"
+                  loading="lazy"
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* Data type pills */}
+          <div className="mt-10 md:mt-12">
+            <p className="text-center text-xs text-slate-400 uppercase tracking-widest font-semibold mb-4">Covers all major data types</p>
+            <div className="flex flex-wrap justify-center gap-2.5 md:gap-3">
+              {[
+                { label: 'Categoric', color: 'bg-rose-50 text-rose-600 border-rose-100' },
+                { label: 'Numeric', color: 'bg-amber-50 text-amber-600 border-amber-100' },
+                { label: 'Categoric + Numeric', color: 'bg-orange-50 text-orange-600 border-orange-100' },
+                { label: 'Relational', color: 'bg-indigo-50 text-indigo-600 border-indigo-100' },
+                { label: 'Time Series', color: 'bg-emerald-50 text-emerald-600 border-emerald-100' },
+                { label: 'Map', color: 'bg-violet-50 text-violet-600 border-violet-100' },
+              ].map((type) => (
+                <span key={type.label} className={`px-3.5 py-1.5 rounded-full text-xs font-semibold border ${type.color}`}>
+                  {type.label}
+                </span>
+              ))}
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      {/* Reproducible Research Section */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <section className="mb-20 md:mb-32">
+          <div className="text-center mb-8 md:mb-12 px-4">
+            <h2 className="text-2xl md:text-3xl font-bold text-slate-900 mb-2">Reproducible Research</h2>
+            <p className="text-slate-500 text-sm md:text-base">From raw data to published results — master the modern R workflow and publish with Quarto.</p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 px-4">
+            <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden hover:shadow-lg transition-shadow duration-300">
+              <div className="px-5 py-3 border-b border-slate-100 flex items-center gap-2">
+                <div className="w-2 h-2 rounded-full bg-indigo-500"></div>
+                <h3 className="text-sm font-bold text-slate-900">Tidyverse Workflow</h3>
+              </div>
+              <div className="p-4 bg-slate-50/50">
+                <img
+                  src="/workflow/tidyverse-package-workflow.png"
+                  alt="Tidyverse package workflow — import, tidy, transform, visualize, model, communicate"
+                  className="w-full h-auto rounded-lg"
+                  loading="lazy"
+                />
+              </div>
+            </div>
+            <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden hover:shadow-lg transition-shadow duration-300">
+              <div className="px-5 py-3 border-b border-slate-100 flex items-center gap-2">
+                <div className="w-2 h-2 rounded-full bg-cyan-500"></div>
+                <h3 className="text-sm font-bold text-slate-900">Quarto Publishing</h3>
+              </div>
+              <div className="p-4 bg-slate-50/50 flex items-center justify-center">
+                <img
+                  src="/workflow/quarto-illustration.png"
+                  alt="Quarto — from R, Python, and more to HTML, PDF, and Word"
+                  className="w-full h-auto rounded-lg"
+                  loading="lazy"
+                />
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+      {/* Previous Cohorts Section */}
+      <section className="mb-20 md:mb-32">
+        <div className="text-center mb-8 md:mb-12 px-4">
+          <h2 className="text-2xl md:text-3xl font-bold text-slate-900 mb-2">Previous Cohorts</h2>
+          <p className="text-slate-500 text-sm md:text-base">Watch recordings from our past sessions to see what you can expect.</p>
+        </div>
+        <div className="px-4 max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {[
+              'dQhZjmw9BK0',
+              'f4AK5aPhGf4',
+              'JaElBhgyE8k',
+              'LTvulssY4iA',
+              'InUrKYEeYUU',
+              'mIKJv6ZuUfU',
+              '99bZpIJ_uZ0',
+              '-I1mLzwpihc',
+            ].map((id, i) => (
+              <div key={id} className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden hover:shadow-lg transition-shadow duration-300">
+                <div className="aspect-video">
+                  <iframe
+                    src={`https://www.youtube.com/embed/${id}`}
+                    title={`Previous Cohort Session ${i + 1}`}
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                    className="w-full h-full"
+                  ></iframe>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Instructor Profile Section */}
+      <section id="instructor" className="mb-20 md:mb-32">
+        <div className="text-center mb-8 md:mb-12 px-4">
+          <h2 className="text-2xl md:text-3xl font-bold text-slate-900 mb-2">Meet Your Instructor</h2>
+          <p className="text-slate-500 text-sm md:text-base">Learn from an expert in computational biology and bioinformatics.</p>
+        </div>
+
+        <div className="px-4">
+          <div className="relative bg-white rounded-3xl border border-slate-200 shadow-sm overflow-hidden">
+            {/* Decorative gradient bar */}
+            <div className="h-1.5 bg-gradient-to-r from-indigo-500 via-violet-500 to-purple-500"></div>
+
+            <div className="p-6 md:p-10 lg:p-12">
+              {/* Top: Photo + Name + Roles */}
+              <div className="flex flex-col md:flex-row items-center md:items-start gap-6 md:gap-10 mb-8 md:mb-10">
+                {/* Profile Image */}
+                <div className="shrink-0">
+                  <div className="relative">
+                    <div className="w-32 h-32 md:w-40 md:h-40 rounded-2xl overflow-hidden border-2 border-slate-100 shadow-lg">
+                      <img
+                        src="/profile/jubayer.png"
+                        alt="Md. Jubayer Hossain"
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                    {/* Status dot */}
+                    <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-emerald-500 rounded-full border-4 border-white shadow-sm"></div>
+                  </div>
+                </div>
+
+                {/* Name & Titles */}
+                <div className="text-center md:text-left">
+                  <h3 className="text-2xl md:text-3xl font-bold text-slate-900 mb-2">Md. Jubayer Hossain</h3>
+                  <div className="flex flex-wrap justify-center md:justify-start gap-2 mb-4">
+                    <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-indigo-50 text-indigo-700 border border-indigo-100">
+                      Founder & CEO, DeepBio Limited
+                    </span>
+                    <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-violet-50 text-violet-700 border border-violet-100">
+                      Founder & Executive Director, CHIRAL Bangladesh
+                    </span>
+                  </div>
+                  <p className="text-slate-500 text-sm md:text-base leading-relaxed max-w-2xl">
+                    Bioinformatics researcher with extensive experience in transcriptomics data analysis and machine learning applications in healthcare. He holds BSc and MSc degrees in Microbiology from Jagannath University, Dhaka, Bangladesh.
+                  </p>
+                  <a href="https://bio.link/hossainlab" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 mt-3 text-sm font-semibold text-indigo-600 hover:text-indigo-700 transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+                    </svg>
+                    bio.link/hossainlab
+                  </a>
+                </div>
+              </div>
+
+              {/* About */}
+              <div className="mb-8 md:mb-10">
+                <div className="bg-slate-50 rounded-2xl p-5 md:p-8 border border-slate-100">
+                  <h4 className="text-sm font-bold text-slate-900 uppercase tracking-wider mb-3 flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                    </svg>
+                    About
+                  </h4>
+                  <div className="text-slate-600 text-sm md:text-base leading-relaxed space-y-3">
+                    <p>
+                      As the Founder and CEO of DeepBio Limited, he leads innovative projects at the intersection of artificial intelligence and biological data analysis. He also serves as the Founder and Executive Director of CHIRAL Bangladesh, a non-profit organization dedicated to advancing computational research in life sciences.
+                    </p>
+                    <p>
+                      Currently, he works as a Visiting Scholar at the Department of Public Health, Daffodil International University, and leads bioinformatics and machine learning programs at cBLAST (Center for Bioinformatics Learning Advancement and Systematic Training), University of Dhaka. His research focuses on applying AI and machine learning techniques to health data, including omics data and neuroimaging, to discover biomarkers and develop predictive models for cancer and neurological disorders.
+                    </p>
+                    <p>
+                      With a passion for making complex computational methods accessible to biologists, Md. Jubayer has developed comprehensive training programs that bridge the gap between traditional biology and modern computational approaches. He specializes in visualizing complex biological data for clinical interpretation and has contributed to numerous research projects in transcriptomics, genomics, and precision medicine.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Research Areas + Teaching Philosophy Grid */}
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                {/* Research Areas */}
+                <div className="bg-gradient-to-br from-indigo-50 to-violet-50 rounded-2xl p-5 md:p-8 border border-indigo-100">
+                  <h4 className="text-sm font-bold text-slate-900 uppercase tracking-wider mb-4 flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
+                    </svg>
+                    Research Areas
+                  </h4>
+                  <div className="space-y-2.5">
+                    {[
+                      'Transcriptomics and Gene Expression Analysis',
+                      'Single-Cell RNA Sequencing Data Analysis',
+                      'Machine Learning Applications in Healthcare',
+                      'Biomarker Discovery for Cancer and Neurological Disorders',
+                      'AI-Driven Precision Medicine',
+                      'Bioinformatics Education and Training',
+                    ].map((area) => (
+                      <div key={area} className="flex items-start gap-2.5">
+                        <div className="w-1.5 h-1.5 rounded-full bg-indigo-500 mt-2 shrink-0"></div>
+                        <span className="text-sm text-slate-700">{area}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Teaching Philosophy */}
+                <div className="bg-gradient-to-br from-amber-50 to-orange-50 rounded-2xl p-5 md:p-8 border border-amber-100">
+                  <h4 className="text-sm font-bold text-slate-900 uppercase tracking-wider mb-4 flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                    </svg>
+                    Teaching Philosophy
+                  </h4>
+                  <blockquote className="text-sm md:text-base text-slate-700 leading-relaxed italic">
+                    <span className="text-3xl text-amber-300 font-serif leading-none mr-1">"</span>
+                    My goal is to demystify bioinformatics and computational biology. I believe that with the right guidance and hands-on practice, any biologist can become proficient in data analysis. This course is designed to be a bridge, empowering you to take control of your data, ask more ambitious questions, and accelerate your research. I focus on building a strong conceptual foundation before diving into the code, ensuring you understand not just 'how' but also 'why'.
+                    <span className="text-3xl text-amber-300 font-serif leading-none ml-1">"</span>
+                  </blockquote>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* Cheatsheets Section */}
       <section className="mb-20 md:mb-32">
@@ -317,6 +630,100 @@ const HomePage: React.FC = () => {
           {CHEATSHEETS.slice(0, 6).map((cs) => (
             <CheatsheetCard key={cs.id} cheatsheet={cs} />
           ))}
+        </div>
+      </section>
+
+      {/* Pricing Section */}
+      <section className="mb-20 md:mb-32 px-4">
+        <div className="text-center mb-8 md:mb-12">
+          <h2 className="text-2xl md:text-3xl font-bold text-slate-900 mb-2">Invest in Your Research Career</h2>
+          <p className="text-slate-500 text-sm md:text-base">Limited-time launch offer — secure your spot before the discount expires.</p>
+        </div>
+
+        <div className="max-w-lg mx-auto">
+          <div className="relative bg-white rounded-3xl border-2 border-indigo-200 shadow-xl overflow-hidden">
+            {/* Limited offer banner */}
+            <div className="bg-gradient-to-r from-red-500 via-rose-500 to-pink-500 text-white text-center py-2.5 px-4">
+              <p className="text-xs md:text-sm font-bold tracking-wide uppercase flex items-center justify-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                50% OFF — Limited Time Only
+              </p>
+            </div>
+
+            {/* Badge */}
+            <div className="absolute top-14 -right-8 bg-amber-400 text-amber-900 text-[10px] font-bold uppercase tracking-wider px-10 py-1 rotate-45 shadow-sm">
+              Best Value
+            </div>
+
+            <div className="p-6 md:p-10">
+              {/* Plan name */}
+              <div className="text-center mb-6">
+                <h3 className="text-xl md:text-2xl font-bold text-slate-900 mb-1">Complete Course Access</h3>
+                <p className="text-sm text-slate-500">Everything you need to master R for research</p>
+              </div>
+
+              {/* Price */}
+              <div className="text-center mb-8">
+                <div className="flex items-center justify-center gap-3 mb-2">
+                  <span className="text-2xl text-slate-400 line-through font-semibold">৳10,200</span>
+                  <span className="bg-red-50 text-red-600 px-2.5 py-0.5 rounded-full text-xs font-bold border border-red-100">SAVE 50%</span>
+                </div>
+                <div className="flex items-baseline justify-center gap-1">
+                  <span className="text-5xl md:text-6xl font-black text-slate-900">৳5,100</span>
+                  <span className="text-slate-400 text-sm font-medium">BDT</span>
+                </div>
+                <p className="text-xs text-slate-400 mt-2">One-time payment, lifetime access</p>
+              </div>
+
+              {/* What's included */}
+              <div className="space-y-3 mb-8">
+                {[
+                  'Full access to all course modules',
+                  'Hands-on R code examples & datasets',
+                  'Publication-ready tables & figures',
+                  'Cheatsheets & quick-reference guides',
+                  'Certificate of completion',
+                  'Access to future updates',
+                  'Community support & Q&A',
+                ].map((item) => (
+                  <div key={item} className="flex items-start gap-3">
+                    <div className="w-5 h-5 rounded-full bg-emerald-100 flex items-center justify-center shrink-0 mt-0.5">
+                      <svg xmlns="http://www.w3.org/2000/svg" className="w-3 h-3 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                      </svg>
+                    </div>
+                    <span className="text-sm text-slate-700">{item}</span>
+                  </div>
+                ))}
+              </div>
+
+              {/* CTA Button */}
+              <a
+                href="#"
+                className="block w-full bg-gradient-to-r from-indigo-600 to-violet-600 text-white text-center py-4 rounded-xl font-bold text-lg hover:from-indigo-700 hover:to-violet-700 transition-all shadow-lg shadow-indigo-200 active:scale-[0.98]"
+              >
+                Enroll Now — ৳5,100
+              </a>
+
+              {/* Trust signals */}
+              <div className="mt-5 flex items-center justify-center gap-4 text-[11px] text-slate-400">
+                <span className="flex items-center gap-1">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                  </svg>
+                  Secure payment
+                </span>
+                <span className="flex items-center gap-1">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
+                  </svg>
+                  Join 100+ researchers
+                </span>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -387,6 +794,112 @@ const CheatsheetsPage: React.FC = () => {
   );
 };
 
+const InstructorPage: React.FC = () => {
+  return (
+    <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10 md:py-16">
+      {/* Hero Card */}
+      <div className="relative bg-white rounded-3xl border border-slate-200 shadow-sm overflow-hidden mb-10">
+        {/* Decorative gradient */}
+        <div className="h-32 md:h-44 bg-gradient-to-br from-indigo-500 via-violet-500 to-purple-600 relative">
+          <div className="absolute inset-0 opacity-20" style={{ backgroundImage: 'radial-gradient(circle at 20% 50%, white 1px, transparent 1px), radial-gradient(circle at 80% 50%, white 1px, transparent 1px)', backgroundSize: '40px 40px' }}></div>
+        </div>
+
+        <div className="px-6 md:px-10 pb-8 md:pb-10">
+          {/* Photo overlapping the gradient */}
+          <div className="-mt-16 md:-mt-20 mb-5 flex flex-col md:flex-row items-center md:items-end gap-5">
+            <div className="w-28 h-28 md:w-36 md:h-36 rounded-2xl overflow-hidden border-4 border-white shadow-xl shrink-0">
+              <img
+                src="/profile/jubayer.png"
+                alt="Md. Jubayer Hossain"
+                className="w-full h-full object-cover"
+              />
+            </div>
+            <div className="text-center md:text-left md:pb-1">
+              <h1 className="text-2xl md:text-3xl font-bold text-slate-900 mb-2">Md. Jubayer Hossain</h1>
+              <div className="flex flex-wrap justify-center md:justify-start gap-2">
+                <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-indigo-50 text-indigo-700 border border-indigo-100">
+                  Founder & CEO, DeepBio Limited
+                </span>
+                <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-violet-50 text-violet-700 border border-violet-100">
+                  Founder & Executive Director, CHIRAL Bangladesh
+                </span>
+              </div>
+              <a href="https://bio.link/hossainlab" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 mt-3 text-sm font-semibold text-indigo-600 hover:text-indigo-700 transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+                </svg>
+                bio.link/hossainlab
+              </a>
+            </div>
+          </div>
+
+          {/* Bio */}
+          <div className="text-slate-600 text-sm md:text-base leading-relaxed space-y-4 mb-8">
+            <p>
+              Md. Jubayer Hossain is a computational biologist and bioinformatics researcher with extensive experience in transcriptomics data analysis and machine learning applications in healthcare. He holds BSc and MSc degrees in Microbiology from Jagannath University, Dhaka, Bangladesh.
+            </p>
+            <p>
+              As the Founder and CEO of DeepBio Limited, he leads innovative projects at the intersection of artificial intelligence and biological data analysis. He also serves as the Founder and Executive Director of CHIRAL Bangladesh, a non-profit organization dedicated to advancing computational research in life sciences.
+            </p>
+            <p>
+              Currently, he works as a Visiting Scholar at the Department of Public Health, Daffodil International University, and leads bioinformatics and machine learning programs at cBLAST (Center for Bioinformatics Learning Advancement and Systematic Training), University of Dhaka. His research focuses on applying AI and machine learning techniques to health data, including omics data and neuroimaging, to discover biomarkers and develop predictive models for cancer and neurological disorders.
+            </p>
+            <p>
+              With a passion for making complex computational methods accessible to biologists, Md. Jubayer has developed comprehensive training programs that bridge the gap between traditional biology and modern computational approaches. He specializes in visualizing complex biological data for clinical interpretation and has contributed to numerous research projects in transcriptomics, genomics, and precision medicine.
+            </p>
+            <p>
+              His teaching philosophy centers on building strong conceptual foundations before diving into technical implementations, ensuring that students understand both the 'how' and 'why' of computational biology methods.
+            </p>
+          </div>
+
+          {/* Grid: Research Areas + Teaching Philosophy */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            {/* Research Areas */}
+            <div className="bg-gradient-to-br from-indigo-50 to-violet-50 rounded-2xl p-5 md:p-8 border border-indigo-100">
+              <h3 className="text-sm font-bold text-slate-900 uppercase tracking-wider mb-4 flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
+                </svg>
+                Research Areas
+              </h3>
+              <div className="space-y-2.5">
+                {[
+                  'Transcriptomics and Gene Expression Analysis',
+                  'Single-Cell RNA Sequencing Data Analysis',
+                  'Machine Learning Applications in Healthcare',
+                  'Biomarker Discovery for Cancer and Neurological Disorders',
+                  'AI-Driven Precision Medicine',
+                  'Bioinformatics Education and Training',
+                ].map((area) => (
+                  <div key={area} className="flex items-start gap-2.5">
+                    <div className="w-1.5 h-1.5 rounded-full bg-indigo-500 mt-2 shrink-0"></div>
+                    <span className="text-sm text-slate-700">{area}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Teaching Philosophy */}
+            <div className="bg-gradient-to-br from-amber-50 to-orange-50 rounded-2xl p-5 md:p-8 border border-amber-100">
+              <h3 className="text-sm font-bold text-slate-900 uppercase tracking-wider mb-4 flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                </svg>
+                Teaching Philosophy
+              </h3>
+              <blockquote className="text-sm md:text-base text-slate-700 leading-relaxed italic">
+                <span className="text-3xl text-amber-300 font-serif leading-none mr-1">"</span>
+                My goal is to demystify bioinformatics and computational biology. I believe that with the right guidance and hands-on practice, any biologist can become proficient in data analysis. This course is designed to be a bridge, empowering you to take control of your data, ask more ambitious questions, and accelerate your research. I focus on building a strong conceptual foundation before diving into the code, ensuring you understand not just 'how' but also 'why'.
+                <span className="text-3xl text-amber-300 font-serif leading-none ml-1">"</span>
+              </blockquote>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 const App: React.FC = () => {
   return (
     <HashRouter>
@@ -395,6 +908,7 @@ const App: React.FC = () => {
           <Route path="/" element={<HomePage />} />
           <Route path="/journey" element={<JourneyPage />} />
           <Route path="/cheatsheets" element={<CheatsheetsPage />} />
+          <Route path="/instructor" element={<InstructorPage />} />
         </Routes>
       </Layout>
     </HashRouter>

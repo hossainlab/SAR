@@ -8,7 +8,7 @@ export interface Module {
   icon: string;
   content: string;
   codeExample: string;
-  category: 'Fundamentals of R' | 'Data Manipulation with R' | 'Publication-ready Tables with R' | 'Visualization';
+  category: 'Fundamentals of R' | 'Data Manipulation with R' | 'Publication-ready Tables with R' | 'Visualization' | 'AI Coding Assistants';
 }
 
 export interface Cheatsheet {
