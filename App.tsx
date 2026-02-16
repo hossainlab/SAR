@@ -110,7 +110,7 @@ const HomePage: React.FC = () => {
         </div>
 
         <div className="px-4">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6 mb-10">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 md:gap-6 mb-10">
             {[
               {
                 icon: <path strokeLinecap="round" strokeLinejoin="round" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />,
@@ -204,7 +204,7 @@ const HomePage: React.FC = () => {
           <h2 className="text-2xl md:text-3xl font-bold text-slate-900 mb-2">Packages We Cover</h2>
           <p className="text-slate-500 text-sm md:text-base">The R ecosystem tools you'll master throughout this journey.</p>
         </div>
-        <div className="flex flex-wrap justify-center items-center gap-6 md:gap-10 px-4">
+        <div className="grid grid-cols-3 sm:grid-cols-4 md:flex md:flex-wrap justify-center items-center gap-4 sm:gap-6 md:gap-10 px-4">
           {[
             { src: '/hex/tidyverse.svg', name: 'tidyverse', url: 'https://www.tidyverse.org/' },
             { src: '/hex/ggplot2_logo.png', name: 'ggplot2', url: 'https://ggplot2.tidyverse.org/' },
@@ -225,11 +225,69 @@ const HomePage: React.FC = () => {
               <img
                 src={pkg.src}
                 alt={`${pkg.name} hex sticker`}
-                className="w-20 h-23 md:w-24 md:h-28 object-contain drop-shadow-md transition-transform duration-200 group-hover:scale-110 group-hover:-translate-y-1"
+                className="w-16 h-20 sm:w-20 sm:h-23 md:w-24 md:h-28 object-contain drop-shadow-md transition-transform duration-200 group-hover:scale-110 group-hover:-translate-y-1"
               />
-              <span className="mt-2 text-xs font-medium text-slate-500 group-hover:text-indigo-600 transition-colors">{pkg.name}</span>
+              <span className="mt-1.5 text-[10px] sm:text-xs font-medium text-slate-500 group-hover:text-indigo-600 transition-colors">{pkg.name}</span>
             </a>
           ))}
+        </div>
+      </section>
+
+      {/* Scientific Journal Color Palettes */}
+      <section className="mb-20 md:mb-32">
+        <div className="text-center mb-8 md:mb-12 px-4">
+          <h2 className="text-2xl md:text-3xl font-bold text-slate-900 mb-2">Scientific Journal Color Palettes</h2>
+          <p className="text-slate-500 text-sm md:text-base max-w-2xl mx-auto">
+            Use publication-standard colors from top journals with <a href="https://nanx.me/ggsci/" target="_blank" rel="noopener noreferrer" className="text-indigo-600 font-semibold hover:text-indigo-700 transition-colors">ggsci</a> — one line of code to match any journal's style.
+          </p>
+        </div>
+        <div className="px-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
+            {[
+              { name: 'NPG', full: 'Nature Publishing Group', img: 'https://nanx.me/ggsci/reference/figures/README-ggsci-npg-1.png' },
+              { name: 'AAAS', full: 'Science (AAAS)', img: 'https://nanx.me/ggsci/reference/figures/README-ggsci-aaas-1.png' },
+              { name: 'NEJM', full: 'New England Journal of Medicine', img: 'https://nanx.me/ggsci/reference/figures/README-ggsci-nejm-1.png' },
+              { name: 'Lancet', full: 'The Lancet', img: 'https://nanx.me/ggsci/reference/figures/README-ggsci-lancet-1.png' },
+              { name: 'JAMA', full: 'Journal of the American Medical Association', img: 'https://nanx.me/ggsci/reference/figures/README-ggsci-jama-1.png' },
+              { name: 'JCO', full: 'Journal of Clinical Oncology', img: 'https://nanx.me/ggsci/reference/figures/README-ggsci-jco-1.png' },
+              { name: 'BMJ', full: 'British Medical Journal', img: 'https://nanx.me/ggsci/reference/figures/README-ggsci-bmj-1.png' },
+              { name: 'Frontiers', full: 'Frontiers Journals', img: 'https://nanx.me/ggsci/reference/figures/README-ggsci-frontiers-1.png' },
+              { name: 'D3', full: 'D3.js Visualization', img: 'https://nanx.me/ggsci/reference/figures/README-ggsci-d3-1.png' },
+            ].map((palette) => (
+              <div key={palette.name} className="group bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-lg hover:border-indigo-200 transition-all duration-300">
+                <div className="aspect-[2/1] bg-slate-50 overflow-hidden">
+                  <img
+                    src={palette.img}
+                    alt={`${palette.name} color palette preview`}
+                    className="w-full h-full object-contain p-2 group-hover:scale-105 transition-transform duration-500"
+                    loading="lazy"
+                  />
+                </div>
+                <div className="p-3 sm:p-4 border-t border-slate-100">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <h3 className="text-sm font-bold text-slate-900">{palette.name}</h3>
+                      <p className="text-[10px] sm:text-xs text-slate-400">{palette.full}</p>
+                    </div>
+                    <code className="text-[10px] font-mono text-indigo-500 bg-indigo-50 px-2 py-0.5 rounded">scale_color_{palette.name.toLowerCase()}()</code>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className="text-center mt-8">
+            <a
+              href="https://nanx.me/ggsci/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 text-sm font-semibold text-indigo-600 hover:text-indigo-700 transition-colors"
+            >
+              Explore all 28+ palettes
+              <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+              </svg>
+            </a>
+          </div>
         </div>
       </section>
 
@@ -239,20 +297,20 @@ const HomePage: React.FC = () => {
         {/* Subtle grid pattern */}
         <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: 'linear-gradient(rgba(255,255,255,.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.1) 1px, transparent 1px)', backgroundSize: '40px 40px' }}></div>
         {/* Glow accents */}
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-emerald-500/10 rounded-full blur-[120px]"></div>
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-indigo-500/10 rounded-full blur-[120px]"></div>
         <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-violet-500/10 rounded-full blur-[120px]"></div>
 
         <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Header */}
           <div className="text-center mb-12 md:mb-16">
-            <div className="inline-block bg-emerald-500/10 text-emerald-400 px-4 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest mb-4 border border-emerald-500/20">
+            <div className="inline-block bg-indigo-500/10 text-indigo-300 px-4 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest mb-4 border border-indigo-500/20">
               From Data to Publication
             </div>
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4 tracking-tight">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4 tracking-tight">
               Publication-Ready Tables
             </h2>
             <p className="text-slate-400 text-sm md:text-lg max-w-2xl mx-auto leading-relaxed">
-              Create journal-quality summary and regression tables in seconds with <code className="text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded text-xs md:text-sm font-mono font-semibold">gtsummary</code>
+              Create journal-quality summary and regression tables in seconds with <code className="text-indigo-300 bg-indigo-500/10 px-2 py-0.5 rounded text-xs md:text-sm font-mono font-semibold">gtsummary</code>
             </p>
           </div>
 
@@ -261,8 +319,8 @@ const HomePage: React.FC = () => {
             {/* Summary Table */}
             <div className="group">
               <div className="flex items-center gap-3 mb-4">
-                <div className="w-8 h-8 rounded-lg bg-emerald-500/20 flex items-center justify-center">
-                  <div className="w-2.5 h-2.5 rounded-full bg-emerald-400"></div>
+                <div className="w-8 h-8 rounded-lg bg-indigo-500/20 flex items-center justify-center">
+                  <div className="w-2.5 h-2.5 rounded-full bg-indigo-400"></div>
                 </div>
                 <div>
                   <h3 className="text-lg font-bold text-white">Descriptive Summary Table</h3>
@@ -278,7 +336,7 @@ const HomePage: React.FC = () => {
                   </div>
                   <span className="text-[10px] text-slate-500 font-mono ml-2">tbl_summary_demo.R</span>
                 </div>
-                <div className="aspect-[16/10] bg-white">
+                <div className="aspect-[4/3] sm:aspect-[16/10] bg-white">
                   <img
                     src="/workflow/tbl_summary_demo1.gif"
                     alt="tbl_summary demo — creating publication-ready summary tables"
@@ -309,7 +367,7 @@ const HomePage: React.FC = () => {
                   </div>
                   <span className="text-[10px] text-slate-500 font-mono ml-2">tbl_regression_demo.R</span>
                 </div>
-                <div className="aspect-[16/10] bg-white">
+                <div className="aspect-[4/3] sm:aspect-[16/10] bg-white">
                   <img
                     src="/workflow/tbl_mvregression_demo.gif"
                     alt="tbl_regression demo — creating publication-ready regression tables"
@@ -322,15 +380,15 @@ const HomePage: React.FC = () => {
           </div>
 
           {/* Export formats bar */}
-          <div className="mt-12 md:mt-16 flex flex-wrap justify-center gap-3 md:gap-4">
+          <div className="mt-8 sm:mt-12 md:mt-16 grid grid-cols-2 sm:flex sm:flex-wrap justify-center gap-2.5 sm:gap-3 md:gap-4">
             {[
               { label: 'Word', icon: 'W' },
               { label: 'PDF', icon: 'P' },
               { label: 'HTML', icon: 'H' },
               { label: 'LaTeX', icon: 'L' },
             ].map((fmt) => (
-              <div key={fmt.label} className="flex items-center gap-2 bg-slate-800/60 backdrop-blur-sm px-4 py-2.5 rounded-xl border border-slate-700/50">
-                <div className="w-6 h-6 rounded-md bg-emerald-500/20 flex items-center justify-center text-emerald-400 text-[10px] font-bold">{fmt.icon}</div>
+              <div key={fmt.label} className="flex items-center justify-center gap-2 bg-slate-800/60 backdrop-blur-sm px-3 sm:px-4 py-2 sm:py-2.5 rounded-xl border border-slate-700/50">
+                <div className="w-6 h-6 rounded-md bg-indigo-500/20 flex items-center justify-center text-indigo-400 text-[10px] font-bold">{fmt.icon}</div>
                 <span className="text-sm text-slate-300 font-medium">{fmt.label}</span>
               </div>
             ))}
@@ -348,66 +406,85 @@ const HomePage: React.FC = () => {
           {/* Header */}
           <div className="text-center mb-12 md:mb-16">
             <div className="inline-block bg-indigo-50 text-indigo-600 px-4 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest mb-4 border border-indigo-100">
-              Choose the Right Chart
+              What You'll Learn to Build
             </div>
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-slate-900 mb-4 tracking-tight">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-slate-900 mb-4 tracking-tight">
               Publication-Ready Figures
             </h2>
             <p className="text-slate-500 text-sm md:text-lg max-w-2xl mx-auto leading-relaxed">
-              Not sure which chart to use? This decision tree guides you from your data type to the perfect visualization — every time.
+              Master 35+ chart types across 7 categories — from simple bar charts to advanced network visualizations.
             </p>
           </div>
 
-          {/* Decision Tree Showcase */}
-          <div className="relative group">
-            {/* Outer glow on hover */}
-            <div className="absolute -inset-1 bg-gradient-to-r from-indigo-200 via-violet-200 to-purple-200 rounded-3xl opacity-0 group-hover:opacity-60 blur-xl transition-opacity duration-500"></div>
-
-            <div className="relative bg-white rounded-3xl border border-slate-200 shadow-lg overflow-hidden">
-              {/* Title bar */}
-              <div className="px-5 md:px-6 py-3.5 border-b border-slate-100 flex items-center justify-between bg-white">
-                <div className="flex items-center gap-3">
-                  <div className="flex gap-1.5">
-                    <div className="w-2.5 h-2.5 rounded-full bg-red-400"></div>
-                    <div className="w-2.5 h-2.5 rounded-full bg-amber-400"></div>
-                    <div className="w-2.5 h-2.5 rounded-full bg-emerald-400"></div>
-                  </div>
-                  <span className="text-xs text-slate-400 font-mono">from_data_to_viz.R</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="px-2.5 py-0.5 rounded-full bg-indigo-50 text-indigo-600 text-[10px] font-bold border border-indigo-100">Interactive Guide</span>
+          <div>
+            {[
+              { category: 'Distribution', plots: [
+                { name: 'Violin', img: 'https://r-graph-gallery.com/img/section/Violin150.png' },
+                { name: 'Density', img: 'https://r-graph-gallery.com/img/section/Density150.png' },
+                { name: 'Histogram', img: 'https://r-graph-gallery.com/img/section/Histogram150.png' },
+                { name: 'Boxplot', img: 'https://r-graph-gallery.com/img/section/Box1150.png' },
+                { name: 'Ridgeline', img: 'https://r-graph-gallery.com/img/section/Joyplot150.png' },
+              ]},
+              { category: 'Correlation', plots: [
+                { name: 'Scatter', img: 'https://r-graph-gallery.com/img/section/ScatterPlot150.png' },
+                { name: 'Heatmap', img: 'https://r-graph-gallery.com/img/section/Heatmap150.png' },
+                { name: 'Correlogram', img: 'https://r-graph-gallery.com/img/section/Correlogram150.png' },
+                { name: 'Bubble', img: 'https://r-graph-gallery.com/img/section/BubblePlot150.png' },
+                { name: '2D Density', img: 'https://r-graph-gallery.com/img/section/2dDensity150.png' },
+              ]},
+              { category: 'Ranking', plots: [
+                { name: 'Barplot', img: 'https://r-graph-gallery.com/img/section/Bar150.png' },
+                { name: 'Lollipop', img: 'https://r-graph-gallery.com/img/section/Lollipop150.png' },
+                { name: 'Spider', img: 'https://r-graph-gallery.com/img/section/Spider150.png' },
+                { name: 'Parallel', img: 'https://r-graph-gallery.com/img/section/Parallel1150.png' },
+                { name: 'Circular Bar', img: 'https://r-graph-gallery.com/img/section/CircularBarplot150.png' },
+              ]},
+              { category: 'Part of a Whole', plots: [
+                { name: 'Stacked Bar', img: 'https://r-graph-gallery.com/img/section/GroupedRed150.png' },
+                { name: 'Treemap', img: 'https://r-graph-gallery.com/img/section/Tree150.png' },
+                { name: 'Donut', img: 'https://r-graph-gallery.com/img/section/Doughnut150.png' },
+                { name: 'Pie Chart', img: 'https://r-graph-gallery.com/img/section/Pie150.png' },
+                { name: 'Waffle', img: 'https://r-graph-gallery.com/img/section/Waffle2150.png' },
+              ]},
+              { category: 'Evolution', plots: [
+                { name: 'Line Plot', img: 'https://r-graph-gallery.com/img/section/Line150.png' },
+                { name: 'Area', img: 'https://r-graph-gallery.com/img/section/Area150.png' },
+                { name: 'Stacked Area', img: 'https://r-graph-gallery.com/img/section/StackedArea150.png' },
+                { name: 'Stream', img: 'https://r-graph-gallery.com/img/section/Stream150.png' },
+                { name: 'Time Series', img: 'https://r-graph-gallery.com/img/section/Time150.gif' },
+              ]},
+              { category: 'Map', plots: [
+                { name: 'Choropleth', img: 'https://r-graph-gallery.com/img/section/Choropleth150.png' },
+                { name: 'Hexbin Map', img: 'https://r-graph-gallery.com/img/section/MapHexbin150.png' },
+                { name: 'Cartogram', img: 'https://r-graph-gallery.com/img/section/Cartogram150.png' },
+                { name: 'Connection', img: 'https://r-graph-gallery.com/img/section/ConnectedMap150.png' },
+                { name: 'Bubble Map', img: 'https://r-graph-gallery.com/img/section/BubbleMap150.png' },
+              ]},
+              { category: 'Flow', plots: [
+                { name: 'Chord', img: 'https://r-graph-gallery.com/img/section/Chord150.png' },
+                { name: 'Network', img: 'https://r-graph-gallery.com/img/section/Network150.png' },
+                { name: 'Sankey', img: 'https://r-graph-gallery.com/img/section/Sankey150.png' },
+                { name: 'Arc Diagram', img: 'https://r-graph-gallery.com/img/section/Arc150.png' },
+                { name: 'Edge Bundling', img: 'https://r-graph-gallery.com/img/section/Bundle150.png' },
+              ]},
+            ].map((group) => (
+              <div key={group.category} className="mb-6 md:mb-8">
+                <h4 className="text-sm md:text-base font-bold text-slate-700 mb-3 md:mb-4 flex items-center gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-indigo-500"></span>
+                  {group.category}
+                </h4>
+                <div className="grid grid-cols-3 sm:grid-cols-5 gap-3 md:gap-4">
+                  {group.plots.map((plot) => (
+                    <div key={plot.name} className="bg-white rounded-xl border border-slate-200 p-3 md:p-4 hover:shadow-lg hover:border-indigo-200 transition-all text-center group/plot">
+                      <div className="w-16 h-16 md:w-20 md:h-20 mx-auto mb-2 md:mb-3 rounded-xl overflow-hidden bg-slate-50 flex items-center justify-center group-hover/plot:scale-105 transition-transform">
+                        <img src={plot.img} alt={plot.name} className="w-full h-full object-cover" loading="lazy" />
+                      </div>
+                      <p className="text-[11px] md:text-xs font-semibold text-slate-600">{plot.name}</p>
+                    </div>
+                  ))}
                 </div>
               </div>
-
-              {/* Image */}
-              <div className="p-4 md:p-6 bg-slate-50/50">
-                <img
-                  src="/workflow/poster_small.png"
-                  alt="From Data to Viz — a decision tree for choosing the right chart type"
-                  className="w-full h-auto rounded-xl"
-                  loading="lazy"
-                />
-              </div>
-            </div>
-          </div>
-
-          {/* Data type pills */}
-          <div className="mt-10 md:mt-12">
-            <p className="text-center text-xs text-slate-400 uppercase tracking-widest font-semibold mb-4">Covers all major data types</p>
-            <div className="flex flex-wrap justify-center gap-2.5 md:gap-3">
-              {[
-                { label: 'Categoric', color: 'bg-rose-50 text-rose-600 border-rose-100' },
-                { label: 'Numeric', color: 'bg-amber-50 text-amber-600 border-amber-100' },
-                { label: 'Categoric + Numeric', color: 'bg-orange-50 text-orange-600 border-orange-100' },
-                { label: 'Relational', color: 'bg-indigo-50 text-indigo-600 border-indigo-100' },
-                { label: 'Time Series', color: 'bg-emerald-50 text-emerald-600 border-emerald-100' },
-                { label: 'Map', color: 'bg-violet-50 text-violet-600 border-violet-100' },
-              ].map((type) => (
-                <span key={type.label} className={`px-3.5 py-1.5 rounded-full text-xs font-semibold border ${type.color}`}>
-                  {type.label}
-                </span>
-              ))}
-            </div>
+            ))}
           </div>
 
         </div>
@@ -437,7 +514,7 @@ const HomePage: React.FC = () => {
             </div>
             <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden hover:shadow-lg transition-shadow duration-300">
               <div className="px-5 py-3 border-b border-slate-100 flex items-center gap-2">
-                <div className="w-2 h-2 rounded-full bg-cyan-500"></div>
+                <div className="w-2 h-2 rounded-full bg-violet-500"></div>
                 <h3 className="text-sm font-bold text-slate-900">Quarto Publishing</h3>
               </div>
               <div className="p-4 bg-slate-50/50 flex items-center justify-center">
@@ -453,6 +530,73 @@ const HomePage: React.FC = () => {
         </section>
       </div>
 
+      {/* Tidyplots Use Cases Showcase */}
+      <section className="mb-20 md:mb-32 bg-gradient-to-b from-slate-50 to-white py-16 md:py-24">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-10 md:mb-14">
+            <div className="inline-block bg-indigo-50 text-indigo-600 px-4 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest mb-4 border border-indigo-100">
+              Powered by tidyplots
+            </div>
+            <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-slate-900 mb-3 tracking-tight">
+              Real-World Visualization Use Cases
+            </h2>
+            <p className="text-slate-500 text-sm md:text-base max-w-2xl mx-auto">
+              From research papers to data journalism — see what you can create with just a few lines of R code using <a href="https://tidyplots.org/use-cases/" target="_blank" rel="noopener noreferrer" className="text-indigo-600 font-semibold hover:text-indigo-700 transition-colors">tidyplots</a>.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-5">
+            {[
+              { src: 'https://tidyplots.org/use-cases/use_cases_files/figure-html/unnamed-chunk-3-1.png', title: 'Scatter Plot', cat: 'General' },
+              { src: 'https://tidyplots.org/use-cases/use_cases_files/figure-html/unnamed-chunk-4-1.png', title: 'Stacked Bar Chart', cat: 'General' },
+              { src: 'https://tidyplots.org/use-cases/use_cases_files/figure-html/unnamed-chunk-6-1.png', title: 'Boxplot with Beeswarm', cat: 'General' },
+              { src: 'https://tidyplots.org/use-cases/use_cases_files/figure-html/unnamed-chunk-8-1.png', title: 'Time Course Plot', cat: 'General' },
+              { src: 'https://tidyplots.org/use-cases/use_cases_files/figure-html/unnamed-chunk-10-1.png', title: 'Violin Plot', cat: 'General' },
+              { src: 'https://tidyplots.org/use-cases/use_cases_files/figure-html/unnamed-chunk-11-1.png', title: 'Donut Chart', cat: 'General' },
+              { src: 'https://tidyplots.org/use-cases/use_cases_files/figure-html/unnamed-chunk-14-1.png', title: 'Heatmap', cat: 'General' },
+              { src: 'https://tidyplots.org/use-cases/use_cases_files/figure-html/unnamed-chunk-16-1.png', title: 'Line with Error Bars', cat: 'General' },
+              { src: 'https://tidyplots.org/use-cases/use_cases_files/figure-html/unnamed-chunk-26-1.png', title: 'Volcano Plot', cat: 'Bioinformatics' },
+              { src: 'https://tidyplots.org/use-cases/use_cases_files/figure-html/unnamed-chunk-27-1.png', title: 'PCA Plot', cat: 'Bioinformatics' },
+              { src: 'https://tidyplots.org/use-cases/use_cases_files/figure-html/unnamed-chunk-28-1.png', title: 'Correlation Matrix', cat: 'Bioinformatics' },
+              { src: 'https://tidyplots.org/use-cases/use_cases_files/figure-html/unnamed-chunk-30-1.png', title: 'Gene Expression Heatmap', cat: 'Bioinformatics' },
+              { src: 'https://tidyplots.org/use-cases/use_cases_files/figure-html/unnamed-chunk-31-1.png', title: 'Hypothesis Testing', cat: 'Bioinformatics' },
+              { src: 'https://tidyplots.org/use-cases/use_cases_files/figure-html/unnamed-chunk-36-1.png', title: 'Trend Analysis', cat: 'Data Journalism' },
+              { src: 'https://tidyplots.org/use-cases/use_cases_files/figure-html/unnamed-chunk-38-1.png', title: 'Faceted Donuts', cat: 'Data Journalism' },
+              { src: 'https://tidyplots.org/use-cases/use_cases_files/figure-html/unnamed-chunk-40-1.png', title: 'Per Capita Comparison', cat: 'Data Journalism' },
+            ].map((item) => (
+              <div key={item.src} className="group bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-xl hover:border-indigo-200 transition-all duration-300">
+                <div className="aspect-square overflow-hidden bg-slate-50">
+                  <img
+                    src={item.src}
+                    alt={item.title}
+                    className="w-full h-full object-contain p-2 group-hover:scale-105 transition-transform duration-500"
+                    loading="lazy"
+                  />
+                </div>
+                <div className="p-3 md:p-4 border-t border-slate-100">
+                  <h3 className="text-xs md:text-sm font-bold text-slate-800 truncate">{item.title}</h3>
+                  <span className="text-[10px] text-indigo-500 font-semibold">{item.cat}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="text-center mt-8">
+            <a
+              href="https://tidyplots.org/use-cases/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 bg-indigo-600 text-white px-6 py-3 rounded-xl font-bold text-sm hover:bg-indigo-700 transition-all shadow-lg shadow-indigo-200"
+            >
+              Explore All Use Cases
+              <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+              </svg>
+            </a>
+          </div>
+        </div>
+      </section>
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
       {/* Previous Cohorts Section */}
@@ -462,7 +606,7 @@ const HomePage: React.FC = () => {
           <p className="text-slate-500 text-sm md:text-base">Watch recordings from our past sessions to see what you can expect.</p>
         </div>
         <div className="px-4 max-w-6xl mx-auto">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
             {[
               'dQhZjmw9BK0',
               'f4AK5aPhGf4',
@@ -501,13 +645,13 @@ const HomePage: React.FC = () => {
             {/* Decorative gradient bar */}
             <div className="h-1.5 bg-gradient-to-r from-indigo-500 via-violet-500 to-purple-500"></div>
 
-            <div className="p-6 md:p-10 lg:p-12">
+            <div className="p-5 sm:p-6 md:p-10 lg:p-12">
               {/* Top: Photo + Name + Roles */}
-              <div className="flex flex-col md:flex-row items-center md:items-start gap-6 md:gap-10 mb-8 md:mb-10">
+              <div className="flex flex-col md:flex-row items-center md:items-start gap-4 sm:gap-6 md:gap-10 mb-6 sm:mb-8 md:mb-10">
                 {/* Profile Image */}
                 <div className="shrink-0">
                   <div className="relative">
-                    <div className="w-32 h-32 md:w-40 md:h-40 rounded-2xl overflow-hidden border-2 border-slate-100 shadow-lg">
+                    <div className="w-24 h-24 sm:w-32 sm:h-32 md:w-40 md:h-40 rounded-2xl overflow-hidden border-2 border-slate-100 shadow-lg">
                       <img
                         src="/profile/jubayer.png"
                         alt="Md. Jubayer Hossain"
@@ -521,16 +665,16 @@ const HomePage: React.FC = () => {
 
                 {/* Name & Titles */}
                 <div className="text-center md:text-left">
-                  <h3 className="text-2xl md:text-3xl font-bold text-slate-900 mb-2">Md. Jubayer Hossain</h3>
-                  <div className="flex flex-wrap justify-center md:justify-start gap-2 mb-4">
-                    <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-indigo-50 text-indigo-700 border border-indigo-100">
+                  <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-slate-900 mb-2">Md. Jubayer Hossain</h3>
+                  <div className="flex flex-wrap justify-center md:justify-start gap-1.5 sm:gap-2 mb-3 sm:mb-4">
+                    <span className="inline-flex items-center px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full text-[10px] sm:text-xs font-semibold bg-indigo-50 text-indigo-700 border border-indigo-100">
                       Founder & CEO, DeepBio Limited
                     </span>
-                    <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-violet-50 text-violet-700 border border-violet-100">
+                    <span className="inline-flex items-center px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full text-[10px] sm:text-xs font-semibold bg-violet-50 text-violet-700 border border-violet-100">
                       Founder & Executive Director, CHIRAL Bangladesh
                     </span>
                   </div>
-                  <p className="text-slate-500 text-sm md:text-base leading-relaxed max-w-2xl">
+                  <p className="text-slate-500 text-xs sm:text-sm md:text-base leading-relaxed max-w-2xl">
                     Bioinformatics researcher with extensive experience in transcriptomics data analysis and machine learning applications in healthcare. He holds BSc and MSc degrees in Microbiology from Jagannath University, Dhaka, Bangladesh.
                   </p>
                   <a href="https://bio.link/hossainlab" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 mt-3 text-sm font-semibold text-indigo-600 hover:text-indigo-700 transition-colors">
@@ -634,7 +778,7 @@ const HomePage: React.FC = () => {
       </section>
 
       {/* Pricing Section */}
-      <section className="mb-20 md:mb-32 px-4">
+      <section id="pricing" className="mb-20 md:mb-32 px-4">
         <div className="text-center mb-8 md:mb-12">
           <h2 className="text-2xl md:text-3xl font-bold text-slate-900 mb-2">Invest in Your Research Career</h2>
           <p className="text-slate-500 text-sm md:text-base">Limited-time launch offer — secure your spot before the discount expires.</p>
@@ -653,7 +797,7 @@ const HomePage: React.FC = () => {
             </div>
 
             {/* Badge */}
-            <div className="absolute top-14 -right-8 bg-amber-400 text-amber-900 text-[10px] font-bold uppercase tracking-wider px-10 py-1 rotate-45 shadow-sm">
+            <div className="hidden sm:block absolute top-14 -right-8 bg-amber-400 text-amber-900 text-[10px] font-bold uppercase tracking-wider px-10 py-1 rotate-45 shadow-sm">
               Best Value
             </div>
 
@@ -671,7 +815,7 @@ const HomePage: React.FC = () => {
                   <span className="bg-red-50 text-red-600 px-2.5 py-0.5 rounded-full text-xs font-bold border border-red-100">SAVE 50%</span>
                 </div>
                 <div className="flex items-baseline justify-center gap-1">
-                  <span className="text-5xl md:text-6xl font-black text-slate-900">৳5,100</span>
+                  <span className="text-4xl sm:text-5xl md:text-6xl font-black text-slate-900">৳5,100</span>
                   <span className="text-slate-400 text-sm font-medium">BDT</span>
                 </div>
                 <p className="text-xs text-slate-400 mt-2">One-time payment, lifetime access</p>
@@ -752,13 +896,13 @@ const JourneyPage: React.FC = () => {
                     globalIndex++;
                     const num = globalIndex;
                     return (
-                      <div key={module.id} className="relative flex items-start space-x-4 md:space-x-8">
-                        <div className="z-10 bg-indigo-600 text-white w-12 h-12 md:w-16 md:h-16 rounded-full flex items-center justify-center font-bold text-lg md:text-xl shadow-lg shrink-0">
+                      <div key={module.id} className="relative flex items-start space-x-3 sm:space-x-4 md:space-x-8">
+                        <div className="z-10 bg-indigo-600 text-white w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 rounded-full flex items-center justify-center font-bold text-base sm:text-lg md:text-xl shadow-lg shrink-0">
                           {num}
                         </div>
-                        <div className="bg-white p-6 md:p-8 rounded-2xl md:rounded-3xl border border-slate-200 shadow-sm hover:shadow-md transition-all flex-grow">
+                        <div className="bg-white p-4 sm:p-6 md:p-8 rounded-xl sm:rounded-2xl md:rounded-3xl border border-slate-200 shadow-sm hover:shadow-md transition-all flex-grow min-w-0">
                           <div className="flex flex-col md:flex-row md:items-center justify-between mb-2 gap-2">
-                            <h3 className="text-xl md:text-2xl font-bold text-slate-900">{module.title}</h3>
+                            <h3 className="text-base sm:text-xl md:text-2xl font-bold text-slate-900">{module.title}</h3>
                             <span className="self-start text-[10px] font-bold text-indigo-600 uppercase tracking-widest bg-indigo-50 px-2 py-0.5 rounded-full">
                               Module {num}
                             </span>
@@ -800,7 +944,7 @@ const InstructorPage: React.FC = () => {
       {/* Hero Card */}
       <div className="relative bg-white rounded-3xl border border-slate-200 shadow-sm overflow-hidden mb-10">
         {/* Decorative gradient */}
-        <div className="h-32 md:h-44 bg-gradient-to-br from-indigo-500 via-violet-500 to-purple-600 relative">
+        <div className="h-28 sm:h-32 md:h-44 bg-gradient-to-br from-indigo-500 via-violet-500 to-purple-600 relative">
           <div className="absolute inset-0 opacity-20" style={{ backgroundImage: 'radial-gradient(circle at 20% 50%, white 1px, transparent 1px), radial-gradient(circle at 80% 50%, white 1px, transparent 1px)', backgroundSize: '40px 40px' }}></div>
         </div>
 

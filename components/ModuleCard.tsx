@@ -24,7 +24,7 @@ const ModuleCard: React.FC<ModuleCardProps> = ({ module }) => {
         </span>
         <span className="text-xs text-slate-400 font-medium">• {module.duration}</span>
       </div>
-      <h3 className="text-xl font-bold text-slate-900 mb-2">
+      <h3 className="text-lg sm:text-xl font-bold text-slate-900 mb-2">
         {module.title}
       </h3>
       <p className="text-slate-600 text-sm flex-grow">

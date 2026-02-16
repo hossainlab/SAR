@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <title>Statistical Analysis with R for Research</title>
     <script src="https://cdn.tailwindcss.com"></script>
@@ -20,6 +20,10 @@
             background-color: #fcfcfd;
             overflow-x: hidden;
             -webkit-tap-highlight-color: transparent;
+            padding-bottom: env(safe-area-inset-bottom);
+        }
+        .safe-area-bottom {
+            padding-bottom: env(safe-area-inset-bottom);
         }
         .font-mono {
             font-family: 'Fira Code', monospace;

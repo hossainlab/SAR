@@ -24,9 +24,9 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
           </div>
 
           <div className="flex items-center space-x-3">
-             <button className="hidden sm:block bg-slate-900 text-white px-4 md:px-5 py-2 rounded-full text-[12px] md:text-sm font-bold hover:bg-slate-800 transition-all shadow-md active:scale-95">
-               Enroll Free
-             </button>
+             <a href="#pricing" className="bg-slate-900 text-white px-3 sm:px-4 md:px-5 py-1.5 sm:py-2 rounded-full text-[11px] sm:text-[12px] md:text-sm font-bold hover:bg-slate-800 transition-all shadow-md active:scale-95">
+               Enroll Now
+             </a>
           </div>
         </nav>
       </header>
@@ -59,7 +59,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
       </footer>
       
       {/* Mobile Bottom Nav */}
-      <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-white/80 backdrop-blur-lg border-t border-slate-100 h-16 flex items-center justify-around z-50 shadow-[0_-4px_12px_rgba(0,0,0,0.05)]">
+      <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-white/80 backdrop-blur-lg border-t border-slate-100 h-16 flex items-center justify-evenly z-50 shadow-[0_-4px_12px_rgba(0,0,0,0.05)] safe-area-bottom">
          <Link to="/" className={`flex flex-col items-center space-y-1 ${isActive('/') ? 'text-indigo-600' : 'text-slate-400'}`}>
             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
