@@ -35,8 +35,8 @@ const HomePage: React.FC = () => {
           The ultimate guide to mastering data manipulation, statistical analysis, and publication-ready reporting with modern R.
         </p>
         <div className="flex flex-col sm:flex-row items-center justify-center space-y-3 sm:space-y-0 sm:space-x-4 px-4">
-          <a href="#curriculum" className="w-full sm:w-auto bg-indigo-600 text-white px-6 md:px-8 py-3 md:py-4 rounded-xl font-bold text-base md:text-lg hover:bg-indigo-700 transition-all shadow-lg text-center">
-            View Curriculum
+          <a href="https://docs.google.com/spreadsheets/d/1lw7SkeNuHpzfi-l520GTzuUj6XqZSfXExCvQzpqZeJU/edit?usp=sharing" target="_blank" rel="noopener noreferrer" className="w-full sm:w-auto bg-indigo-600 text-white px-6 md:px-8 py-3 md:py-4 rounded-xl font-bold text-base md:text-lg hover:bg-indigo-700 transition-all shadow-lg text-center">
+            View Schedule
           </a>
           <Link to="/journey" className="w-full sm:w-auto bg-white/90 backdrop-blur-sm text-slate-700 border border-slate-200 px-6 md:px-8 py-3 md:py-4 rounded-xl font-bold text-base md:text-lg hover:bg-white transition-all text-center shadow-sm">
             See Journey Map
@@ -851,12 +851,17 @@ const HomePage: React.FC = () => {
               <div className="w-10 h-10 rounded-full bg-indigo-600 text-white font-bold text-lg flex items-center justify-center mx-auto mb-5 relative z-10">2</div>
               <h3 className="font-bold text-slate-900 text-base md:text-lg mb-2">Fill the Enrollment Form</h3>
               <p className="text-sm text-slate-500 mb-4">Complete the Google Form with your details and payment confirmation.</p>
-              <div className="flex items-center justify-center gap-2 text-xs text-slate-400">
+              <a
+                href="https://forms.gle/3bQyrF49AbowZsgZA"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 text-xs text-indigo-600 font-semibold hover:text-indigo-800 transition-colors"
+              >
                 <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                 </svg>
-                Takes less than 2 minutes
-              </div>
+                Open Enrollment Form
+              </a>
             </div>
 
             {/* Step 3: Confirmation */}
@@ -942,7 +947,9 @@ const HomePage: React.FC = () => {
 
               {/* CTA Button */}
               <a
-                href="#"
+                href="https://forms.gle/3bQyrF49AbowZsgZA"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="block w-full bg-gradient-to-r from-indigo-600 to-violet-600 text-white text-center py-4 rounded-xl font-bold text-lg hover:from-indigo-700 hover:to-violet-700 transition-all shadow-lg shadow-indigo-200 active:scale-[0.98]"
               >
                 Enroll Now — ৳5,100

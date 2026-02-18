@@ -17,14 +17,14 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
           </Link>
           
           <div className="hidden md:flex items-center space-x-6 lg:space-x-8 text-sm font-semibold">
-            <Link to="/" className={`${isActive('/') ? 'text-indigo-600' : 'text-slate-500 hover:text-indigo-600'} transition-colors`}>Curriculum</Link>
+            <a href="https://docs.google.com/spreadsheets/d/1lw7SkeNuHpzfi-l520GTzuUj6XqZSfXExCvQzpqZeJU/edit?usp=sharing" target="_blank" rel="noopener noreferrer" className="text-slate-500 hover:text-indigo-600 transition-colors">Schedule</a>
             <Link to="/journey" className={`${isActive('/journey') ? 'text-indigo-600' : 'text-slate-500 hover:text-indigo-600'} transition-colors`}>Journey Map</Link>
             <Link to="/cheatsheets" className={`${isActive('/cheatsheets') ? 'text-indigo-600' : 'text-slate-500 hover:text-indigo-600'} transition-colors`}>Cheatsheets</Link>
             <Link to="/instructor" className={`${isActive('/instructor') ? 'text-indigo-600' : 'text-slate-500 hover:text-indigo-600'} transition-colors`}>Instructor</Link>
           </div>
 
           <div className="flex items-center space-x-3">
-             <a href="#pricing" className="bg-slate-900 text-white px-3 sm:px-4 md:px-5 py-1.5 sm:py-2 rounded-full text-[11px] sm:text-[12px] md:text-sm font-bold hover:bg-slate-800 transition-all shadow-md active:scale-95">
+             <a href="https://forms.gle/3bQyrF49AbowZsgZA" target="_blank" rel="noopener noreferrer" className="bg-slate-900 text-white px-3 sm:px-4 md:px-5 py-1.5 sm:py-2 rounded-full text-[11px] sm:text-[12px] md:text-sm font-bold hover:bg-slate-800 transition-all shadow-md active:scale-95">
                Enroll Now
              </a>
           </div>
