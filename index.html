@@ -15,6 +15,9 @@
         :root {
             scrollbar-gutter: stable;
         }
+        html {
+            scroll-behavior: auto;
+        }
         body {
             font-family: 'Inter', sans-serif;
             background-color: #fcfcfd;
@@ -22,6 +25,15 @@
             -webkit-tap-highlight-color: transparent;
             padding-bottom: env(safe-area-inset-bottom);
         }
+        /* Modern slim scrollbar */
+        ::-webkit-scrollbar { width: 5px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, #6366f1, #8b5cf6);
+            border-radius: 99px;
+        }
+        ::-webkit-scrollbar-thumb:hover { background: #4f46e5; }
+        * { scrollbar-width: thin; scrollbar-color: #6366f1 transparent; }
         .safe-area-bottom {
             padding-bottom: env(safe-area-inset-bottom);
         }

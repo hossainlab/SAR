@@ -11,16 +11,16 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     <div className="min-h-screen flex flex-col bg-[#fdfdfd]">
       <header className="sticky top-0 z-50 bg-white/70 backdrop-blur-xl border-b border-slate-100">
         <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-14 md:h-16 flex items-center justify-between">
-          <Link to="/" className="flex items-center space-x-2">
+          <Link to="/" onClick={() => window.scrollTo(0, 0)} className="flex items-center space-x-2">
             <div className="bg-indigo-600 w-7 h-7 md:w-8 md:h-8 flex items-center justify-center rounded-lg text-white font-black text-sm md:text-lg shadow-sm">R</div>
             <span className="text-base md:text-lg font-bold text-slate-900 tracking-tight">R for Research</span>
           </Link>
           
           <div className="hidden md:flex items-center space-x-6 lg:space-x-8 text-sm font-semibold">
+            <Link to="/" className={`${isActive('/') ? 'text-indigo-600' : 'text-slate-500 hover:text-indigo-600'} transition-colors`}>Home</Link>
             <a href="https://docs.google.com/spreadsheets/d/1lw7SkeNuHpzfi-l520GTzuUj6XqZSfXExCvQzpqZeJU/edit?usp=sharing" target="_blank" rel="noopener noreferrer" className="text-slate-500 hover:text-indigo-600 transition-colors">Schedule</a>
             <Link to="/journey" className={`${isActive('/journey') ? 'text-indigo-600' : 'text-slate-500 hover:text-indigo-600'} transition-colors`}>Journey Map</Link>
             <Link to="/cheatsheets" className={`${isActive('/cheatsheets') ? 'text-indigo-600' : 'text-slate-500 hover:text-indigo-600'} transition-colors`}>Cheatsheets</Link>
-            <Link to="/instructor" className={`${isActive('/instructor') ? 'text-indigo-600' : 'text-slate-500 hover:text-indigo-600'} transition-colors`}>Instructor</Link>
           </div>
 
           <div className="flex items-center space-x-3">
@@ -78,12 +78,12 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
             </svg>
             <span className="text-[10px] font-bold uppercase">Sheets</span>
          </Link>
-         <Link to="/instructor" className={`flex flex-col items-center space-y-1 ${isActive('/instructor') ? 'text-indigo-600' : 'text-slate-400'}`}>
+         <a href="https://docs.google.com/spreadsheets/d/1lw7SkeNuHpzfi-l520GTzuUj6XqZSfXExCvQzpqZeJU/edit?usp=sharing" target="_blank" rel="noopener noreferrer" className="flex flex-col items-center space-y-1 text-slate-400">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
             </svg>
-            <span className="text-[10px] font-bold uppercase">Instructor</span>
-         </Link>
+            <span className="text-[10px] font-bold uppercase">Schedule</span>
+         </a>
       </nav>
     </div>
   );
