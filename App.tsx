@@ -7,6 +7,8 @@ import CheatsheetCard from './components/CheatsheetCard';
 import ParticleNetwork from './components/ParticleNetwork';
 import { COURSE_MODULES, TECH_STACK, CHEATSHEETS, MODULE_CATEGORIES } from './constants';
 
+const base = import.meta.env.BASE_URL;
+
 
 
 const HomePage: React.FC = () => {
@@ -57,12 +59,12 @@ const HomePage: React.FC = () => {
           {/* Workflow Steps */}
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 md:gap-3">
             {[
-              { step: 'Import', icon: '/hex/logo-readr.png', pkg: 'readr', color: 'from-blue-500 to-blue-600', bg: 'bg-blue-50', text: 'text-blue-700', border: 'border-blue-200' },
-              { step: 'Tidy', icon: '/hex/logo-tidyr.png', pkg: 'tidyr', color: 'from-emerald-500 to-emerald-600', bg: 'bg-emerald-50', text: 'text-emerald-700', border: 'border-emerald-200' },
+              { step: 'Import', icon: `${base}hex/logo-readr.png`, pkg: 'readr', color: 'from-blue-500 to-blue-600', bg: 'bg-blue-50', text: 'text-blue-700', border: 'border-blue-200' },
+              { step: 'Tidy', icon: `${base}hex/logo-tidyr.png`, pkg: 'tidyr', color: 'from-emerald-500 to-emerald-600', bg: 'bg-emerald-50', text: 'text-emerald-700', border: 'border-emerald-200' },
               { step: 'Transform', icon: 'https://raw.githubusercontent.com/rstudio/hex-stickers/master/PNG/dplyr.png', pkg: 'dplyr', color: 'from-orange-500 to-orange-600', bg: 'bg-orange-50', text: 'text-orange-700', border: 'border-orange-200' },
-              { step: 'Visualize', icon: '/hex/ggplot2_logo.png', pkg: 'ggplot2', color: 'from-indigo-500 to-indigo-600', bg: 'bg-indigo-50', text: 'text-indigo-700', border: 'border-indigo-200' },
-              { step: 'Model', icon: '/hex/gtsummary_logo.png', pkg: 'gtsummary', color: 'from-violet-500 to-violet-600', bg: 'bg-violet-50', text: 'text-violet-700', border: 'border-violet-200' },
-              { step: 'Communicate', icon: '/hex/quarto.png', pkg: 'Quarto', color: 'from-rose-500 to-rose-600', bg: 'bg-rose-50', text: 'text-rose-700', border: 'border-rose-200' },
+              { step: 'Visualize', icon: `${base}hex/ggplot2_logo.png`, pkg: 'ggplot2', color: 'from-indigo-500 to-indigo-600', bg: 'bg-indigo-50', text: 'text-indigo-700', border: 'border-indigo-200' },
+              { step: 'Model', icon: `${base}hex/gtsummary_logo.png`, pkg: 'gtsummary', color: 'from-violet-500 to-violet-600', bg: 'bg-violet-50', text: 'text-violet-700', border: 'border-violet-200' },
+              { step: 'Communicate', icon: `${base}hex/quarto.png`, pkg: 'Quarto', color: 'from-rose-500 to-rose-600', bg: 'bg-rose-50', text: 'text-rose-700', border: 'border-rose-200' },
             ].map((item, i, arr) => (
               <div key={item.step} className="relative flex flex-col items-center">
                 {/* Connector arrow (hidden on first item and on mobile wraps) */}
@@ -248,20 +250,20 @@ const HomePage: React.FC = () => {
         </div>
         <div className="grid grid-cols-3 sm:grid-cols-4 md:flex md:flex-wrap justify-center items-center gap-4 sm:gap-6 md:gap-10 px-4">
           {[
-            { src: '/hex/tidyverse.svg', name: 'tidyverse', url: 'https://www.tidyverse.org/' },
-            { src: '/hex/ggplot2_logo.png', name: 'ggplot2', url: 'https://ggplot2.tidyverse.org/' },
-            { src: '/hex/tidyplots_logo.png', name: 'tidyplots', url: 'https://jbengler.github.io/tidyplots/' },
-            { src: '/hex/ggsci_logo.png', name: 'ggsci', url: 'https://nanx.me/ggsci/' },
-            { src: '/hex/pathwork_logo.svg', name: 'patchwork', url: 'https://patchwork.data-imaginist.com/' },
-            { src: '/hex/plotly2.png', name: 'plotly', url: 'https://plotly.com/r/' },
-            { src: '/hex/logo-tidyr.png', name: 'tidyr', url: 'https://tidyr.tidyverse.org/' },
-            { src: '/hex/logo-readr.png', name: 'readr', url: 'https://readr.tidyverse.org/' },
-            { src: '/hex/logo-stringr.png', name: 'stringr', url: 'https://stringr.tidyverse.org/' },
-            { src: '/hex/logo-lubridate.png', name: 'lubridate', url: 'https://lubridate.tidyverse.org/' },
-            { src: '/hex/logo-gt.png', name: 'gt', url: 'https://gt.rstudio.com/' },
-            { src: '/hex/gtsummary_logo.png', name: 'gtsummary', url: 'https://www.danieldsjoberg.com/gtsummary/' },
-            { src: '/hex/logo-shiny.png', name: 'shiny', url: 'https://shiny.posit.co/' },
-            { src: '/hex/quarto.png', name: 'Quarto', url: 'https://quarto.org/' },
+            { src: `${base}hex/tidyverse.svg`, name: 'tidyverse', url: 'https://www.tidyverse.org/' },
+            { src: `${base}hex/ggplot2_logo.png`, name: 'ggplot2', url: 'https://ggplot2.tidyverse.org/' },
+            { src: `${base}hex/tidyplots_logo.png`, name: 'tidyplots', url: 'https://jbengler.github.io/tidyplots/' },
+            { src: `${base}hex/ggsci_logo.png`, name: 'ggsci', url: 'https://nanx.me/ggsci/' },
+            { src: `${base}hex/pathwork_logo.svg`, name: 'patchwork', url: 'https://patchwork.data-imaginist.com/' },
+            { src: `${base}hex/plotly2.png`, name: 'plotly', url: 'https://plotly.com/r/' },
+            { src: `${base}hex/logo-tidyr.png`, name: 'tidyr', url: 'https://tidyr.tidyverse.org/' },
+            { src: `${base}hex/logo-readr.png`, name: 'readr', url: 'https://readr.tidyverse.org/' },
+            { src: `${base}hex/logo-stringr.png`, name: 'stringr', url: 'https://stringr.tidyverse.org/' },
+            { src: `${base}hex/logo-lubridate.png`, name: 'lubridate', url: 'https://lubridate.tidyverse.org/' },
+            { src: `${base}hex/logo-gt.png`, name: 'gt', url: 'https://gt.rstudio.com/' },
+            { src: `${base}hex/gtsummary_logo.png`, name: 'gtsummary', url: 'https://www.danieldsjoberg.com/gtsummary/' },
+            { src: `${base}hex/logo-shiny.png`, name: 'shiny', url: 'https://shiny.posit.co/' },
+            { src: `${base}hex/quarto.png`, name: 'Quarto', url: 'https://quarto.org/' },
           ].map((pkg) => (
             <a key={pkg.name} href={pkg.url} target="_blank" rel="noopener noreferrer" className="group flex flex-col items-center">
               <img
@@ -380,7 +382,7 @@ const HomePage: React.FC = () => {
                 </div>
                 <div className="aspect-[4/3] sm:aspect-[16/10] bg-white">
                   <img
-                    src="/workflow/tbl_summary_demo1.gif"
+                    src={`${base}workflow/tbl_summary_demo1.gif`}
                     alt="tbl_summary demo — creating publication-ready summary tables"
                     className="w-full h-full object-contain"
                     loading="lazy"
@@ -411,7 +413,7 @@ const HomePage: React.FC = () => {
                 </div>
                 <div className="aspect-[4/3] sm:aspect-[16/10] bg-white">
                   <img
-                    src="/workflow/tbl_mvregression_demo.gif"
+                    src={`${base}workflow/tbl_mvregression_demo.gif`}
                     alt="tbl_regression demo — creating publication-ready regression tables"
                     className="w-full h-full object-contain"
                     loading="lazy"
@@ -547,7 +549,7 @@ const HomePage: React.FC = () => {
               </div>
               <div className="p-4 bg-slate-50/50">
                 <img
-                  src="/workflow/tidyverse-package-workflow.png"
+                  src={`${base}workflow/tidyverse-package-workflow.png`}
                   alt="Tidyverse package workflow — import, tidy, transform, visualize, model, communicate"
                   className="w-full h-auto rounded-lg"
                   loading="lazy"
@@ -561,7 +563,7 @@ const HomePage: React.FC = () => {
               </div>
               <div className="p-4 bg-slate-50/50 flex items-center justify-center">
                 <img
-                  src="/workflow/quarto-illustration.png"
+                  src={`${base}workflow/quarto-illustration.png`}
                   alt="Quarto — from R, Python, and more to HTML, PDF, and Word"
                   className="w-full h-auto rounded-lg"
                   loading="lazy"
@@ -695,7 +697,7 @@ const HomePage: React.FC = () => {
                   <div className="relative">
                     <div className="w-24 h-24 sm:w-32 sm:h-32 md:w-40 md:h-40 rounded-2xl overflow-hidden border-2 border-slate-100 shadow-lg">
                       <img
-                        src="/profile/jubayer.png"
+                        src={`${base}profile/jubayer.png`}
                         alt="Md. Jubayer Hossain"
                         className="w-full h-full object-cover"
                       />
@@ -1057,7 +1059,7 @@ const InstructorPage: React.FC = () => {
           <div className="-mt-16 md:-mt-20 mb-5 flex flex-col md:flex-row items-center md:items-end gap-5">
             <div className="w-28 h-28 md:w-36 md:h-36 rounded-2xl overflow-hidden border-4 border-white shadow-xl shrink-0">
               <img
-                src="/profile/jubayer.png"
+                src={`${base}profile/jubayer.png`}
                 alt="Md. Jubayer Hossain"
                 className="w-full h-full object-cover"
               />

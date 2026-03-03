@@ -22,7 +22,7 @@ const CheatsheetCard: React.FC<CheatsheetCardProps> = ({ cheatsheet }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
-  const fileUrl = `/cheatsheet/${cheatsheet.filename}`;
+  const fileUrl = `${import.meta.env.BASE_URL}cheatsheet/${cheatsheet.filename}`;
 
   useEffect(() => {
     if (!canvasRef.current) return;
