@@ -1,0 +1,41 @@
+---
+title: "Statistical Analysis with R for Research"
+# subtitle: "A complete Guide for Researchers"
+author:
+  - name: Md. Jubayer Hossain
+    orcid: 0000-0001-9323-4997
+    url: https://mdjubayerhossain.com/
+    affiliations: 
+    - Visiting Researcher
+    - Daffodil International University
+    - Founder & Chief Executive Officer
+    - DeepBio Limited 
+    - Founder & Executive Director
+    - CHIRAL Bangladesh
+date: last-modified
+date-format: "[Last Updated on] MMMM, YYYY"
+footer: "R for Research | &copy; 2026 Md. Jubayer Hossain"
+editor: source
+format: 
+  revealjs: 
+    logo: images/chirallogo.jpg 
+    css: slides.scss
+    theme: slides.scss
+    transition: fade
+    slide-number: true
+    chalkboard: false
+    toc: true
+    toc-depth: 1
+    toc-title: Agenda
+execute:
+  echo: true
+  output: asis
+  freeze: auto
+cache: true
+---
+
+{{< include 00-intro.qmd >}} 
+{{< include 01-background.qmd >}} 
+{{< include 02-getting-started.qmd >}} 
+{{< include 03-data-types.qmd >}}
+{{< include 04-operators.qmd >}}
