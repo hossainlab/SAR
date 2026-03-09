@@ -159,61 +159,6 @@ const HomePage: React.FC = () => {
         </div>
       </section>
 
-      {/* Class Schedule */}
-      <section className="mb-20 md:mb-32 px-4">
-        <div className="max-w-3xl mx-auto">
-          <div className="text-center mb-8 md:mb-10">
-            <div className="inline-block bg-indigo-50 text-indigo-600 px-4 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest mb-4 border border-indigo-100">
-              Live Classes
-            </div>
-            <h2 className="text-2xl md:text-3xl font-bold text-slate-900 mb-2">Class Schedule</h2>
-            <p className="text-slate-500 text-sm md:text-base">Two live sessions every week — designed to fit your evening routine.</p>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
-            {/* Friday */}
-            <div className="bg-white rounded-2xl border border-slate-200 p-5 md:p-6 hover:shadow-lg hover:border-indigo-200 transition-all">
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 md:w-14 md:h-14 bg-indigo-50 rounded-xl flex items-center justify-center shrink-0">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6 md:w-7 md:h-7 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                  </svg>
-                </div>
-                <div>
-                  <h3 className="font-bold text-slate-900 text-base md:text-lg">Friday</h3>
-                  <p className="text-slate-500 text-sm">9:00 PM — 11:00 PM</p>
-                </div>
-              </div>
-            </div>
-
-            {/* Saturday */}
-            <div className="bg-white rounded-2xl border border-slate-200 p-5 md:p-6 hover:shadow-lg hover:border-indigo-200 transition-all">
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 md:w-14 md:h-14 bg-violet-50 rounded-xl flex items-center justify-center shrink-0">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6 md:w-7 md:h-7 text-violet-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                  </svg>
-                </div>
-                <div>
-                  <h3 className="font-bold text-slate-900 text-base md:text-lg">Saturday</h3>
-                  <p className="text-slate-500 text-sm">9:00 PM — 11:00 PM</p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Summary line */}
-          <div className="mt-6 text-center">
-            <p className="text-sm text-slate-500 flex items-center justify-center gap-2">
-              <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-              2 classes/week &bull; 2 hours/class &bull; 4 hours of live learning every week
-            </p>
-          </div>
-        </div>
-      </section>
-
       {/* Curriculum Grid */}
       <section id="curriculum" className="mb-20 md:mb-32">
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 md:mb-12 px-4">
