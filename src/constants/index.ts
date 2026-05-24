@@ -1,4 +1,4 @@
-import { Module, Cheatsheet } from './types';
+import { Module, Cheatsheet } from '../types/types';
 
 export interface PackageInfo {
   name: string;

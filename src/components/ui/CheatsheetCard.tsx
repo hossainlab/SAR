@@ -1,6 +1,6 @@
 
 import React, { useRef, useEffect, useState } from 'react';
-import { Cheatsheet } from '../types';
+import { Cheatsheet } from '../../types/types';
 
 declare const pdfjsLib: any;
 
